@@ -62,7 +62,13 @@ const menus = computed(() => {
           <span>{{ router.currentRoute.value.name }}</span>
         </div>
 
-        <div v-for="item in menus" :key="item.path" class="nav-button" :class="item.customClass">
+        <div
+          v-for="item in menus"
+          :key="item.path"
+          class="nav-button"
+          :class="item.customClass"
+          @click="$router.push(item.path)"
+        >
           <span>{{ item.name }}</span>
         </div>
       </nav>
