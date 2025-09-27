@@ -19,6 +19,10 @@ html {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.ant-layout {
+  background: transparent !important;
+}
+
 .global-text-color {
   color: var(--text-color) !important;
 }
