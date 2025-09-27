@@ -1,0 +1,48 @@
+@keyframes moveY {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 0.4s ease-in-out;
+}
+
+.zoom-enter-from,
+.zoom-leave-to {
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+.blur-enter-active,
+.blur-leave-active {
+  transition: all 0.5s cubic-bezier(0.23, 0.18, 0, 0.5);
+}
+
+.blur-enter-from,
+.blur-leave-to {
+  filter: blur(5px);
+}
