@@ -1,0 +1,102 @@
+// Global tool style class
+
+.full-card-body-container {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  overflow-y: auto;
+}
+
+.text-black-shadow {
+  text-shadow:
+    6px -4px 15px #303030,
+    -7px 7px 15px #161616;
+}
+
+.text-white-shadow {
+  text-shadow:
+    6px -4px 15px #e6dede,
+    -7px 7px 15px #e2e2e2;
+}
+
+.color-danger {
+  color: var(--color-danger);
+}
+
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-warning {
+  color: var(--color-warning);
+}
+
+.color-success {
+  color: var(--color-success);
+}
+
+.color-info {
+  color: var(--color-info);
+}
+
+.button-color-success {
+  color: #ffffff !important;
+  background-color: var(--color-green-6) !important;
+}
+
+.button-color-warning {
+  color: #ffffff !important;
+  background-color: var(--color-warning) !important;
+}
+
+.button-color-danger {
+  color: #ffffff !important;
+  background-color: var(--color-danger) !important;
+}
+
+.button-color-info {
+  background-color: var(--color-info) !important;
+}
+
+.transition-all-6 {
+  transition: all 0.6s;
+}
+
+.transition-all-4 {
+  transition: all 0.4s;
+}
+
+.app-max-width {
+  max-width: var(--app-max-width);
+  margin: auto;
+}
+
+.require-field {
+  &::before {
+    content: "*";
+    color: red;
+    margin-right: 4px;
+  }
+}
+
+.dialog-overflow-container {
+  max-height: 80vh;
+  overflow-x: hidden;
+}
+
+.scrollbar-hidden {
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE 10+ */
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  /* Chrome, Safari, Opera */
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}

@@ -1,0 +1,123 @@
+@import "./tools.scss";
+
+.bg-extend-css {
+  .card-panel {
+    backdrop-filter: blur(3px);
+  }
+
+  .ant-table,
+  .left-menu,
+  .ant-table-cell,
+  .action-btn-item,
+  .inner-card-wrapper,
+  .ant-select-dropdown,
+  .file-breadcrumbs {
+    background-color: var(--level-2-bg-color) !important;
+  }
+  .card-panel,
+  .ant-pagination-item {
+    background-color: var(--level-1-bg-color) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .ant-btn-default {
+    background-color: var(--level-1-bg-color) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+  .ant-btn-primary {
+    background-color: var(--primary-btn-color);
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .ant-btn-dangerous {
+    background-color: var(--danger-btn-color);
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .ant-input-affix-wrapper,
+  .ant-select-selector {
+    background-color: var(--level-1-bg-color) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .ant-modal-content {
+    background-color: var(--level-0-bg-color) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .ant-modal-title,
+  .ant-modal-header,
+  .ant-input-affix-wrapper > .ant-input {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+}
+
+.extend-light-css {
+  .breadcrumbs {
+    @extend .text-white-shadow;
+  }
+  .terminal-wrapper {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+  .app-header-content-for-phone {
+    .card-panel {
+      background-color: #000000b4 !important;
+    }
+  }
+}
+
+.extend-dark-css {
+  .breadcrumbs {
+    @extend .text-black-shadow;
+  }
+  .terminal-wrapper {
+    background-color: var(--level-1-bg-color) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+}
+
+// PC
+.app-light-extend-theme {
+  --level-0-bg-color: #ffffffd0;
+  --level-1-bg-color: #ffffffae;
+  --level-2-bg-color: #ffffff84;
+  --primary-btn-color: #1669dccf;
+  --danger-btn-color: #d32f2fac;
+  --background-color-white: var(--level-1-bg-color);
+  .app-header-wrapper {
+    background-color: #00000093 !important;
+  }
+  @extend .bg-extend-css;
+  @extend .extend-light-css;
+}
+
+// PC
+.app-dark-extend-theme {
+  --level-0-bg-color: #000000b4;
+  --level-1-bg-color: #000000a9;
+  --level-2-bg-color: #1919196b;
+  --primary-btn-color: #1669dccf;
+  --danger-btn-color: #d32f2fac;
+  --background-color-white: var(--level-1-bg-color);
+  @extend .bg-extend-css;
+  @extend .extend-dark-css;
+}
+
+// Phone
+@media (max-width: 992px) {
+  .app-dark-extend-theme {
+    --level-0-bg-color: #000000f2;
+    --level-1-bg-color: #000000dd;
+    --level-2-bg-color: #0000006b;
+    --background-color-white: var(--level-1-bg-color);
+    --app-header-bg: var(--level-0-bg-color);
+  }
+
+  .app-light-extend-theme {
+    --level-0-bg-color: #ffffffe8;
+    --level-1-bg-color: #ffffffc5;
+    --level-2-bg-color: #ffffff90;
+    --background-color-white: var(--level-1-bg-color);
+  }
+}
