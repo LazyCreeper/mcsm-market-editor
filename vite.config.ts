@@ -4,6 +4,7 @@ import Vue from '@vitejs/plugin-vue'
 import Fonts from 'unplugin-fonts/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import tailwindcss from '@tailwindcss/vite'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -27,6 +28,7 @@ export default defineConfig({
     Fonts({
       // TODO: MiSans
     }),
+    tailwindcss(),
     AutoImport({
       imports: [
         'vue',
