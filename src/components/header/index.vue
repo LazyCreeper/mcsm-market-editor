@@ -6,6 +6,7 @@ import { useScroll } from '@vueuse/core'
 import { isPhone } from '@/hooks/useResponsive'
 import logo from '@/assets/logo.png'
 import LangToggle from './LangToggle.vue'
+import { t } from '@/utils/i18n'
 
 // const props = defineProps<{
 //   collapsed: {
@@ -58,8 +59,9 @@ const menus = computed(() => {
           <img class="logo h-[18px]" :src="logo" />
         </a>
 
-        <div class="nav-button">
-          <span>{{ router.currentRoute.value.name }}</span>
+        <div class="nav-button" @click="$router.push('/')">
+          <!-- <span>{{ router.currentRoute.value.name }}</span> -->
+          <span>{{ t('首页') }}</span>
         </div>
 
         <div

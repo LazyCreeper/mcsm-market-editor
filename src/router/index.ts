@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: t('模板生成'),
+      name: t('模板编辑器'),
       component: () => import('@/views/home/HomeView.vue'),
       meta: {}
     },
@@ -61,7 +61,7 @@ const router = createRouter({
       name: 'appView',
       component: () => import('@/views/app/index.vue'),
       meta: {
-        needLogin: true
+        // needLogin: true
       },
 
       children: [
@@ -76,7 +76,15 @@ const router = createRouter({
           name: t('仪表板'),
           component: () => import('@/views/app/dashboard/index.vue'),
           meta: {
-            title: t('仪表板'),
+            mainMenu: true
+          }
+        },
+
+        {
+          path: 'editor',
+          name: t('编辑器'),
+          component: () => import('@/views/app/editor/index.vue'),
+          meta: {
             mainMenu: true
           }
         }
@@ -135,7 +143,7 @@ router.beforeEach((to, from, next) => {
     })
   }
 
-  document.title = (to.meta.title || t('模板生成')) + ' - MCSManager'
+  document.title = (to.meta.title || t('模板编辑器')) + ' - MCSManager'
 
   next()
 })

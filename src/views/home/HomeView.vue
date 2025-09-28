@@ -2,12 +2,18 @@
 import { h } from 'vue'
 import { t } from '@/utils/i18n'
 import { QuestionCircleOutlined, SlackOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
+import router from '@/router'
 const templateUrl = ref('https://script.mcsmanager.com/market.json')
 
 const handleSubmit = () => {
-  if (!templateUrl.value) {
-    return
-  }
+  if (!templateUrl.value) return message.error(t('请输入模板地址'))
+  router.push({
+    path: '/app/editor',
+    query: {
+      url: templateUrl.value
+    }
+  })
 }
 </script>
 
@@ -24,7 +30,7 @@ const handleSubmit = () => {
         <p class="mt-4 mb-8 text-xl">
           {{ t('适用于 MCSManager 10 的应用市场模板编辑器') }}
         </p>
-        <a-form layout="inline" class="justify-center">
+        <a-form layout="inline" class="justify-center" @submit="handleSubmit">
           <a-form-item>
             <a-input
               v-model:value="templateUrl"
