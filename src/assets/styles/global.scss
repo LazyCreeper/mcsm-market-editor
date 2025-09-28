@@ -75,6 +75,7 @@ html {
 .global-app-container {
   max-width: var(--app-max-width);
   margin: auto;
+  width: 100%;
 }
 
 @media (max-width: 1410px) {

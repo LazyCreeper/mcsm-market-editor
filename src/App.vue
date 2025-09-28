@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ConfigProvider } from 'ant-design-vue'
+import { Button, ConfigProvider, Input, InputSearch, Select, Table } from 'ant-design-vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { theme } from './plugins/theme'
 import dayjs from 'dayjs'
@@ -23,6 +23,10 @@ const { progressLinear } = indexStore()
 
 onMounted(() => {
   dayjs.locale('zh-cn')
+
+  ;[Button, Select, Input, Table, InputSearch].forEach((element) => {
+    element.props.size.default = 'large'
+  })
 })
 
 // watchEffect(() => {
@@ -45,25 +49,23 @@ onMounted(() => {
   />
   <ConfigProvider :locale="zhCN" :theme>
     <a-layout class="transition-all duration-300">
-      <AppHeader />
-
-      <a-layout-content disabled :style="{ overflow: 'initial' }">
+      <a-layout-content disabled class="global-app-container">
+        <AppHeader />
         <RouterView v-slot="{ Component }">
           <Transition name="fade" mode="out-in">
-            <div :key="$route.name">
-              <a-spin
-                :indicator="
-                  h(LoadingOutlined, {
-                    style: {
-                      fontSize: '48px'
-                    }
-                  })
-                "
-                :spinning="progressLinear.num > 0"
-              >
-                <component :is="Component" />
-              </a-spin>
-            </div>
+            <a-spin
+              :key="$route.name"
+              :indicator="
+                h(LoadingOutlined, {
+                  style: {
+                    fontSize: '48px'
+                  }
+                })
+              "
+              :spinning="progressLinear.num > 0"
+            >
+              <component :is="Component" />
+            </a-spin>
           </Transition>
         </RouterView>
       </a-layout-content>
