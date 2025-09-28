@@ -3,7 +3,15 @@ import { h } from 'vue'
 import CardPanel from '@/components/CardPanel.vue'
 import type { QuickStartPackages, QuickStartTemplate } from '@/types'
 import { isCN, t } from '@/utils/i18n'
-import { DatabaseOutlined, LoadingOutlined } from '@ant-design/icons-vue'
+import {
+  CopyOutlined,
+  DatabaseOutlined,
+  DownloadOutlined,
+  EditOutlined,
+  FileTextOutlined,
+  LoadingOutlined,
+  SaveOutlined
+} from '@ant-design/icons-vue'
 import { useRouteQuery } from '@vueuse/router'
 import { message } from 'ant-design-vue'
 
@@ -187,7 +195,6 @@ const appPlatformList = computed(() => {
 })
 
 const handleReset = () => {
-  // TODO: 格式化语言
   searchForm.language = isCN() ? 'zh_cn' : 'en_us'
   searchForm.gameType = SEARCH_ALL_KEY
   searchForm.category = SEARCH_ALL_KEY
@@ -219,6 +226,47 @@ onMounted(() => {
 
 <template>
   <div class="my-8"></div>
+  <a-typography-title :level="3" style="margin-bottom: 8px">
+    <EditOutlined />
+    {{ t('编辑器选项 & 说明') }}
+  </a-typography-title>
+  <a-typography-paragraph>
+    <div>
+      <p>
+        <span>{{ t('您可以通过鼠标拖拽来实现排序，也可以通过点击模板进行信息编辑。') }}</span>
+      </p>
+    </div>
+  </a-typography-paragraph>
+  <a-form layout="horizontal" :model="searchForm" style="display: flex; gap: 10px; flex-wrap: wrap">
+    <a-form-item class="mb-0">
+      <a-button class="btn-has-icon" type="primary" size="large">
+        {{ t('保存更改到浏览器') }}
+        <SaveOutlined />
+      </a-button>
+    </a-form-item>
+
+    <a-form-item class="mb-0">
+      <a-button class="button-color-success btn-has-icon" size="large">
+        {{ t('下载修改后的文件') }}
+        <DownloadOutlined />
+      </a-button>
+    </a-form-item>
+
+    <a-form-item class="mb-0">
+      <a-button class="btn-has-icon" type="default" size="large">
+        {{ t('查看原始文件') }}
+        <FileTextOutlined />
+      </a-button>
+    </a-form-item>
+
+    <a-form-item class="mb-0">
+      <a-button class="btn-has-icon" type="dashed" size="large">
+        {{ t('复制模板到剪切板') }}
+        <CopyOutlined />
+      </a-button>
+    </a-form-item>
+  </a-form>
+
   <a-typography-title :level="3" style="margin-bottom: 8px">
     <DatabaseOutlined />
     {{ t('模板市场') }}
@@ -331,7 +379,7 @@ onMounted(() => {
         </a-form-item>
 
         <a-form-item class="mb-0">
-          <a-button type="default" size="large" @click="handleReset">
+          <a-button type="default" size="large">
             {{ t('重置所有筛选条件') }}
           </a-button>
         </a-form-item>
