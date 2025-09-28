@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { t } from '@/utils/i18n'
-import { CreditCardOutlined, SlackOutlined } from '@ant-design/icons-vue'
+import { QuestionCircleOutlined, SlackOutlined } from '@ant-design/icons-vue'
 const templateUrl = ref('https://script.mcsmanager.com/market.json')
 
 const handleSubmit = () => {
@@ -48,7 +48,10 @@ const handleSubmit = () => {
     </a-col>
     <a-col :span="8">
       <div class="w-100 text-center text-sky-400">
-        <CreditCardOutlined class="drop-shadow-lg drop-shadow-sky-600" style="font-size: 20rem" />
+        <QuestionCircleOutlined
+          class="drop-shadow-lg drop-shadow-sky-600"
+          style="font-size: 20rem"
+        />
       </div>
     </a-col>
   </a-row>

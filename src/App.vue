@@ -8,6 +8,7 @@ import { indexStore } from './stores'
 import { LoadingOutlined } from '@ant-design/icons-vue'
 import { h } from 'vue'
 import AppHeader from '@/components/header/index.vue'
+import Footer from './components/Footer.vue'
 
 const { progressLinear } = indexStore()
 
@@ -23,7 +24,6 @@ const { progressLinear } = indexStore()
 
 onMounted(() => {
   dayjs.locale('zh-cn')
-
   ;[Button, Select, Input, Table, InputSearch].forEach((element) => {
     element.props.size.default = 'large'
   })
@@ -51,6 +51,7 @@ onMounted(() => {
     <a-layout class="transition-all duration-300">
       <a-layout-content disabled class="global-app-container">
         <AppHeader />
+
         <RouterView v-slot="{ Component }">
           <Transition name="fade" mode="out-in">
             <a-spin
@@ -68,6 +69,8 @@ onMounted(() => {
             </a-spin>
           </Transition>
         </RouterView>
+
+        <Footer class="fixed right-0 bottom-0 left-0" />
       </a-layout-content>
     </a-layout>
   </ConfigProvider>

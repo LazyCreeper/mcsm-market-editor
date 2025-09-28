@@ -21,6 +21,7 @@ declare module 'vue' {
     ARow: typeof import('ant-design-vue/es')['Row']
     ASpin: typeof import('ant-design-vue/es')['Spin']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
+    Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/header/index.vue')['default']
     LangToggle: typeof import('./src/components/header/LangToggle.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
