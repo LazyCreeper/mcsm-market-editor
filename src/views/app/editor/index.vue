@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons-vue'
 import { useRouteQuery } from '@vueuse/router'
 import { message } from 'ant-design-vue'
+import { toCopy } from '@/utils'
 
 const url = useRouteQuery('url', '', { transform: String })
 
@@ -219,6 +220,21 @@ const handlePlatformChange = () => {
 
 const checkRaw = () => window.open(url.value)
 
+const downloadMarketJson = () => {
+  if (!appList.value) return message.warning(t('暂无数据可下载'))
+  const dataStr = JSON.stringify(appList.value, null, 2)
+  const blob = new Blob([dataStr], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'market.json'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+  message.success(t('已开始下载...'))
+}
+
 onMounted(() => {
   fetchTemplate()
 })
@@ -250,7 +266,11 @@ onMounted(() => {
       </a-form-item>
 
       <a-form-item class="mb-0">
-        <a-button class="button-color-success btn-has-icon" size="large">
+        <a-button
+          class="button-color-success btn-has-icon"
+          size="large"
+          @click="downloadMarketJson"
+        >
           {{ t('下载修改后的文件') }}
           <DownloadOutlined />
         </a-button>
@@ -264,7 +284,12 @@ onMounted(() => {
       </a-form-item>
 
       <a-form-item class="mb-0">
-        <a-button class="btn-has-icon" type="dashed" size="large">
+        <a-button
+          class="btn-has-icon"
+          type="dashed"
+          size="large"
+          @click="toCopy(JSON.stringify(appList))"
+        >
           {{ t('复制模板到剪切板') }}
           <CopyOutlined />
         </a-button>
