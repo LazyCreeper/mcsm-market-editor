@@ -70,6 +70,7 @@ onMounted(() => {
           </Transition>
         </RouterView>
 
+        <div class="pt-16"></div>
         <Footer class="fixed right-0 bottom-0 left-0" />
       </a-layout-content>
     </a-layout>
