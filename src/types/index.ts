@@ -35,7 +35,6 @@ export interface QuickStartPackages {
 }
 
 export interface QuickStartTemplate {
-  name: string
   languages: {
     label: string
     value: string

@@ -17,6 +17,7 @@ import { useRouteQuery } from '@vueuse/router'
 import { message } from 'ant-design-vue'
 import { toCopy } from '@/utils'
 import Editor from './dialogs/Editor.vue'
+import _ from 'lodash'
 
 const url = useRouteQuery('url', '', { transform: String })
 
@@ -237,6 +238,29 @@ const downloadMarketJson = () => {
 }
 
 const editorRef = ref<InstanceType<typeof Editor>>()
+const rawItem = ref<QuickStartPackages>()
+const toEdit = (item: QuickStartPackages) => {
+  rawItem.value = item
+  const actualIndex = appList.value?.packages.findIndex(
+    (pkg) =>
+      pkg.targetLink === rawItem.value?.targetLink &&
+      pkg.title === rawItem.value?.title &&
+      pkg.gameType === rawItem.value?.gameType &&
+      pkg.language === rawItem.value?.language &&
+      pkg.category === rawItem.value?.category
+  )
+  editorRef?.value?.open(item, actualIndex)
+}
+
+const save = (item: QuickStartPackages, i: number) => {
+  if (!appList.value?.packages) return
+  // 如果 i < 0 表示新
+  if (i < 0) {
+    appList.value.packages.push(item)
+  } else {
+    appList.value.packages[i] = item
+  }
+}
 
 onMounted(() => {
   fetchTemplate()
@@ -307,7 +331,7 @@ onMounted(() => {
       </a-form-item>
 
       <a-form-item class="mb-0">
-        <a-button class="button-color-success btn-has-icon" size="large">
+        <a-button class="button-color-success btn-has-icon" size="large" @click="editorRef?.open()">
           {{ t('新增模板') }}
           <PlusOutlined />
         </a-button>
@@ -507,8 +531,9 @@ onMounted(() => {
                   type="primary"
                   size="large"
                   class="download-button"
-                  @click="editorRef?.open(item)"
+                  @click="toEdit(item)"
                 >
+                  <!-- 要获取原来在applist里面的 i,而不是筛选过后的i -->
                   <template #icon>
                     <DownloadOutlined />
                   </template>
@@ -533,7 +558,7 @@ onMounted(() => {
     </a-col>
   </a-row>
 
-  <Editor ref="editorRef" />
+  <Editor ref="editorRef" @ok="save" />
 </template>
 
 <style scoped>
