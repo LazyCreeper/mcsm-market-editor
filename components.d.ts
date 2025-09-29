@@ -17,6 +17,7 @@ declare module 'vue' {
     ALayout: typeof import('ant-design-vue/es')['Layout']
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     AMenu: typeof import('ant-design-vue/es')['Menu']
+    AModal: typeof import('ant-design-vue/es')['Modal']
     AProgress: typeof import('ant-design-vue/es')['Progress']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASelect: typeof import('ant-design-vue/es')['Select']

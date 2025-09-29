@@ -16,6 +16,7 @@ import {
 import { useRouteQuery } from '@vueuse/router'
 import { message } from 'ant-design-vue'
 import { toCopy } from '@/utils'
+import Editor from './dialogs/Editor.vue'
 
 const url = useRouteQuery('url', '', { transform: String })
 
@@ -234,6 +235,8 @@ const downloadMarketJson = () => {
   URL.revokeObjectURL(url)
   message.success(t('已开始下载...'))
 }
+
+const editorRef = ref<InstanceType<typeof Editor>>()
 
 onMounted(() => {
   fetchTemplate()
@@ -504,7 +507,7 @@ onMounted(() => {
                   type="primary"
                   size="large"
                   class="download-button"
-                  @click="console.log(item)"
+                  @click="editorRef?.open(item)"
                 >
                   <template #icon>
                     <DownloadOutlined />
@@ -529,6 +532,8 @@ onMounted(() => {
       </div>
     </a-col>
   </a-row>
+
+  <Editor ref="editorRef" />
 </template>
 
 <style scoped>
