@@ -26,7 +26,25 @@ export interface QuickStartPackages {
   remark: string
   targetLink?: string
   author: string
-  setupInfo?: IJsonData
+  setupInfo?: {
+    startCommand: string
+    stopCommand: string
+    ie: string
+    oe: string
+    type: string
+    tag: string[]
+    fileCode: string
+    processType: string
+    updateCommand: string
+    docker?: {
+      image: string
+      ports: string[]
+      extraVolumes: string[]
+      workingDir: string
+      env: string[]
+      changeWorkdir: boolean
+    }
+  }
   gameType: string
   image: string
   platform: string

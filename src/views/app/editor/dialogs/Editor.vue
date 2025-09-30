@@ -5,6 +5,8 @@ import type { QuickStartPackages } from '@/types'
 import { message, type FormInstance } from 'ant-design-vue'
 import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons-vue'
+import { dockerPortsArray } from '@/utils'
+import { useDockerEnvEditDialog, usePortEditDialog, useVolumeEditDialog } from '@/components/fc'
 
 interface FilterOption {
   label: string
@@ -129,6 +131,40 @@ const props = defineProps<{
       cancel()
     } finally {
       loading.value = false
+    }
+  },
+  handleEditDockerConfig = async (type: 'port' | 'volume' | 'env') => {
+    if (type === 'port' && formData.value?.setupInfo) {
+      const portArray = dockerPortsArray(formData.value?.setupInfo?.docker?.ports || [])
+      const result = await usePortEditDialog(portArray)
+      const portsArray = result.map((v) => `${v.host}:${v.container}/${v.protocol}`)
+      formData.value.setupInfo.docker!.ports = portsArray
+    }
+
+    if (type === 'volume' && formData.value?.setupInfo) {
+      const volumes = formData.value.setupInfo.docker?.extraVolumes?.map((v) => {
+        const tmp = v.split('|')
+        return {
+          host: tmp[0] || '',
+          container: tmp[1] || ''
+        }
+      })
+      const result = await useVolumeEditDialog(volumes)
+      const volumesArray = result.map((v) => `${v.host}|${v.container}`)
+      formData.value.setupInfo.docker!.extraVolumes = volumesArray
+    }
+
+    if (type === 'env' && formData.value?.setupInfo) {
+      const envs = formData.value.setupInfo.docker?.env?.map((v) => {
+        const tmp = v.split('=')
+        return {
+          label: tmp[0] || '',
+          value: tmp[1] || ''
+        }
+      })
+      const result = await useDockerEnvEditDialog(envs)
+      const envsArray = result.map((v) => `${v.label}=${v.value}`)
+      formData.value.setupInfo.docker!.env = envsArray
     }
   }
 
@@ -428,11 +464,21 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('端口映射')" :name="['setupInfo', 'docker', 'ports']">
-                <a-input
-                  v-model:value="formData.setupInfo.docker.ports"
-                  :disabled="!isDockerMode"
-                  placeholder="eg: {mcsm_port1}:25565/udp"
-                />
+                <a-input-group compact style="display: flex">
+                  <a-input
+                    v-model:value="formData.setupInfo.docker.ports"
+                    :disabled="!isDockerMode"
+                    placeholder="eg: {mcsm_port1}:25565/udp"
+                  />
+                  <a-button
+                    type="primary"
+                    size="large"
+                    :disabled="!isDockerMode"
+                    @click="handleEditDockerConfig('port')"
+                  >
+                    {{ t('编辑') }}
+                  </a-button>
+                </a-input-group>
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -440,15 +486,38 @@ defineExpose({
                 :label="t('额外挂载目录（可选）')"
                 :name="['setupInfo', 'docker', 'extraVolumes']"
               >
-                <a-input
-                  v-model:value="formData.setupInfo.docker.extraVolumes"
-                  :disabled="!isDockerMode"
-                />
+                <a-input-group compact style="display: flex">
+                  <a-input
+                    v-model:value="formData.setupInfo.docker.extraVolumes"
+                    :disabled="!isDockerMode"
+                  />
+                  <a-button
+                    type="primary"
+                    size="large"
+                    :disabled="!isDockerMode"
+                    @click="handleEditDockerConfig('volume')"
+                  >
+                    {{ t('编辑') }}
+                  </a-button>
+                </a-input-group>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('环境变量（可选）')" :name="['setupInfo', 'docker', 'env']">
-                <a-input v-model:value="formData.setupInfo.docker.env" :disabled="!isDockerMode" />
+                <a-input-group compact style="display: flex">
+                  <a-input
+                    v-model:value="formData.setupInfo.docker.env"
+                    :disabled="!isDockerMode"
+                  />
+                  <a-button
+                    type="primary"
+                    size="large"
+                    :disabled="!isDockerMode"
+                    @click="handleEditDockerConfig('env')"
+                  >
+                    {{ t('编辑') }}
+                  </a-button>
+                </a-input-group>
               </a-form-item>
             </a-col>
           </a-row>
