@@ -530,7 +530,7 @@ onMounted(() => {
                   block
                   type="primary"
                   size="large"
-                  class="download-button"
+                  class="download-button btn-has-icon"
                   @click="toEdit(item)"
                 >
                   <!-- 要获取原来在applist里面的 i,而不是筛选过后的i -->
@@ -545,7 +545,7 @@ onMounted(() => {
                   block
                   type="primary"
                   size="large"
-                  class="download-button"
+                  class="download-button btn-has-icon"
                   @click="searchForm.gameType = item.gameType"
                 >
                   {{ t('查看') }}

@@ -36,11 +36,11 @@ const props = defineProps<{
     setupInfo: {
       startCommand: '',
       stopCommand: '',
-      ie: '',
-      oe: '',
+      ie: 'utf-8',
+      oe: 'utf-8',
       type: '',
       tag: [''],
-      fileCode: '',
+      fileCode: 'utf-8',
       processType: '',
       updateCommand: '',
       docker: {
@@ -347,7 +347,7 @@ defineExpose({
               <a-form-item :label="t('输入编码格式')" :name="['setupInfo', 'ie']">
                 <a-input
                   v-model:value="formData.setupInfo.ie"
-                  :placeholder="t('建议保持默认值：utf8')"
+                  :placeholder="t('建议保持默认值：utf-8')"
                 />
               </a-form-item>
             </a-col>
@@ -355,7 +355,7 @@ defineExpose({
               <a-form-item :label="t('输出编码格式')" :name="['setupInfo', 'oe']">
                 <a-input
                   v-model:value="formData.setupInfo.oe"
-                  :placeholder="t('建议保持默认值：utf8')"
+                  :placeholder="t('建议保持默认值：utf-8')"
                 />
               </a-form-item>
             </a-col>
@@ -363,13 +363,12 @@ defineExpose({
               <a-form-item :label="t('文件编码格式')" :name="['setupInfo', 'fileCode']">
                 <a-input
                   v-model:value="formData.setupInfo.fileCode"
-                  :placeholder="t('建议保持默认值：utf8')"
+                  :placeholder="t('建议保持默认值：utf-8')"
                 />
               </a-form-item>
             </a-col>
           </a-row>
 
-          <!-- TODO: select 标签 -->
           <a-form-item :label="t('附加标签（可选）')" :name="['setupInfo', 'tag']">
             <a-select
               v-model:value="formData.setupInfo.tag"
@@ -432,6 +431,7 @@ defineExpose({
                 <a-input
                   v-model:value="formData.setupInfo.docker.ports"
                   :disabled="!isDockerMode"
+                  placeholder="eg: {mcsm_port1}:25565/udp"
                 />
               </a-form-item>
             </a-col>
