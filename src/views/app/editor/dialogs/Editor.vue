@@ -4,8 +4,19 @@ import { t } from '@/utils/i18n'
 import type { QuickStartPackages } from '@/types'
 import { message, type FormInstance } from 'ant-design-vue'
 import _ from 'lodash'
+import { PlusOutlined } from '@ant-design/icons-vue'
 
-const status = ref(false),
+interface FilterOption {
+  label: string
+  value: string
+}
+
+const props = defineProps<{
+    gL: FilterOption[]
+    pL: FilterOption[]
+    cL: FilterOption[]
+  }>(),
+  status = ref(false),
   title = ref(''),
   loading = ref(false),
   editMode = ref<boolean>(true),
@@ -50,10 +61,49 @@ const status = ref(false),
   formRef = ref<FormInstance>(),
   formData = ref<QuickStartPackages>(),
   index = ref(-1),
+  isDockerMode = computed(() => formData.value?.setupInfo?.processType === 'docker'),
+  VNodes = defineComponent({
+    props: {
+      vnodes: {
+        type: Object,
+        required: true
+      }
+    },
+    render() {
+      return this.vnodes
+    }
+  }),
+  SEARCH_ALL_KEY = 'ALL',
+  selectOptions = ref({
+    appGameTypeList: props.gL,
+    appPlatformList: props.pL,
+    appCategoryList: props.cL
+  }),
+  searchFormData = ref<{
+    appGameTypeList: string
+    appPlatformList: string
+    appCategoryList: string
+  }>({
+    appGameTypeList: '',
+    appPlatformList: '',
+    appCategoryList: ''
+  }),
+  addOption = (item: string, category: keyof typeof selectOptions.value) => {
+    selectOptions.value[category].push({
+      label: item,
+      value: item
+    })
+    searchFormData.value[category] = ''
+  },
   emits = defineEmits(['ok']),
   open = (item?: QuickStartPackages, i?: number) => {
+    selectOptions.value.appGameTypeList = props.gL
+    selectOptions.value.appPlatformList = props.pL
+    selectOptions.value.appCategoryList = props.cL
     if (item) {
       formData.value = _.cloneDeep(item)
+      if (!formData.value.setupInfo?.docker)
+        formData.value.setupInfo!.docker = _.cloneDeep(defaultFormData.setupInfo!.docker)
       editMode.value = true
     } else {
       formData.value = _.cloneDeep(defaultFormData)
@@ -116,15 +166,17 @@ defineExpose({
                   v-model:value="formData.description"
                   allow-clear
                   size="large"
-                  :autosize="{ minRows: 1 }"
+                  :auto-size="{ minRows: 1 }"
                 />
               </a-form-item>
 
-              <!-- TODO：改为下拉选择 -->
               <a-row :gutter="20">
                 <a-col :span="12">
                   <a-form-item :label="t('语言')" name="language">
-                    <a-input v-model:value="formData.language" />
+                    <a-select v-model:value="formData.language" :placeholder="t('请选择语言')">
+                      <a-select-option value="zh_cn">简体中文</a-select-option>
+                      <a-select-option value="en_us">English</a-select-option>
+                    </a-select>
                   </a-form-item>
                 </a-col>
                 <a-col :span="12">
@@ -139,7 +191,31 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('一级分类（游戏名称）')" name="gameType">
-                <a-input v-model:value="formData.gameType" />
+                <a-select
+                  v-model:value="formData.gameType"
+                  show-search
+                  :placeholder="t('所有游戏')"
+                  :options="
+                    selectOptions.appGameTypeList.filter((item) => item.value !== SEARCH_ALL_KEY)
+                  "
+                >
+                  <template #dropdownRender="{ menuNode: menu }">
+                    <v-nodes :vnodes="menu" />
+                    <a-divider style="margin: 4px 0" />
+                    <a-space style="padding: 4px 8px">
+                      <a-input ref="inputRef" v-model:value="searchFormData.appGameTypeList" />
+                      <a-button
+                        type="text"
+                        @click="addOption(searchFormData.appGameTypeList, 'appGameTypeList')"
+                      >
+                        <template #icon>
+                          <PlusOutlined />
+                        </template>
+                        {{ t('添加') }}
+                      </a-button>
+                    </a-space>
+                  </template>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -187,7 +263,7 @@ defineExpose({
               v-model:value="formData.setupInfo.startCommand"
               allow-clear
               size="large"
-              :autosize="{ minRows: 1 }"
+              :auto-size="{ minRows: 1 }"
               :placeholder="t('留空则使用容器自带的入口程序（EntryPoint）')"
             />
           </a-form-item>
@@ -198,7 +274,7 @@ defineExpose({
                   v-model:value="formData.setupInfo.stopCommand"
                   allow-clear
                   size="large"
-                  :autosize="{ minRows: 1 }"
+                  :auto-size="{ minRows: 1 }"
                   :placeholder="t('点击“关闭”按钮时执行的命令')"
                 />
               </a-form-item>
@@ -209,7 +285,7 @@ defineExpose({
                   v-model:value="formData.setupInfo.updateCommand"
                   allow-clear
                   size="large"
-                  :autosize="{ minRows: 1 }"
+                  :auto-size="{ minRows: 1 }"
                   :placeholder="t('点击“更新”按钮时执行的命令')"
                 />
               </a-form-item>
@@ -251,12 +327,21 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('启用 Docker 容器')" :name="['setupInfo', 'processType']">
-                <a-input v-model:value="formData.setupInfo.processType" />
+                <a-switch
+                  v-model:checked="formData.setupInfo.processType"
+                  checked-value="docker"
+                  un-checked-value="undefined"
+                >
+                </a-switch>
               </a-form-item>
             </a-col>
             <a-col :span="16">
               <a-form-item :label="t('镜像名称')" :name="['setupInfo', 'docker', 'image']">
-                <a-input v-model:value="formData.setupInfo.docker.image" />
+                <a-input
+                  v-model:value="formData.setupInfo.docker.image"
+                  :disabled="!isDockerMode"
+                  :placeholder="t('格式为“镜像名:标签”，latest 表示最新版本')"
+                />
               </a-form-item>
             </a-col>
           </a-row>
@@ -267,7 +352,10 @@ defineExpose({
                 :label="t('容器内工作目录')"
                 :name="['setupInfo', 'docker', 'workingDir']"
               >
-                <a-input v-model:value="formData.setupInfo.docker.workingDir" />
+                <a-input
+                  v-model:value="formData.setupInfo.docker.workingDir"
+                  :disabled="!isDockerMode"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="6">
@@ -275,7 +363,10 @@ defineExpose({
                 :label="t('强制切换到工作目录')"
                 :name="['setupInfo', 'docker', 'changeWorkdir']"
               >
-                <a-switch v-model:checked="formData.setupInfo.docker.changeWorkdir"></a-switch>
+                <a-switch
+                  v-model:checked="formData.setupInfo.docker.changeWorkdir"
+                  :disabled="!isDockerMode"
+                ></a-switch>
               </a-form-item>
             </a-col>
           </a-row>
@@ -283,11 +374,9 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('端口映射')" :name="['setupInfo', 'docker', 'ports']">
-                <a-textarea
+                <a-input
                   v-model:value="formData.setupInfo.docker.ports"
-                  allow-clear
-                  size="large"
-                  :autosize="{ minRows: 1 }"
+                  :disabled="!isDockerMode"
                 />
               </a-form-item>
             </a-col>
@@ -296,12 +385,15 @@ defineExpose({
                 :label="t('额外挂载目录（可选）')"
                 :name="['setupInfo', 'docker', 'extraVolumes']"
               >
-                <a-input v-model:value="formData.setupInfo.docker.extraVolumes" />
+                <a-input
+                  v-model:value="formData.setupInfo.docker.extraVolumes"
+                  :disabled="!isDockerMode"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('环境变量（可选）')" :name="['setupInfo', 'docker', 'env']">
-                <a-input v-model:value="formData.setupInfo.docker.env" />
+                <a-input v-model:value="formData.setupInfo.docker.env" :disabled="!isDockerMode" />
               </a-form-item>
             </a-col>
           </a-row>

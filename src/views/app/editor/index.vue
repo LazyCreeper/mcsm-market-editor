@@ -558,7 +558,13 @@ onMounted(() => {
     </a-col>
   </a-row>
 
-  <Editor ref="editorRef" @ok="save" />
+  <Editor
+    ref="editorRef"
+    @ok="save"
+    :gL="appGameTypeList"
+    :pL="appPlatformList"
+    :cL="appCategoryList"
+  />
 </template>
 
 <style scoped>
