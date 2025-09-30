@@ -265,9 +265,6 @@ const save = (item: QuickStartPackages, i: number) => {
 onMounted(() => {
   fetchTemplate()
 })
-
-// TODO: 根据本地存储的ID获取
-// const id = useRouteQuery('id')
 </script>
 
 <template>
@@ -279,16 +276,25 @@ onMounted(() => {
   <a-typography-paragraph>
     <div>
       <p>
-        <span>{{ t('您可以通过鼠标拖拽来实现排序，也可以通过点击模板进行信息编辑。') }}</span>
+        {{
+          t(
+            '点击“查看”即可查看当前分类下的所有模板，点击“安装”即可编辑模板信息，点击“批量编辑”进行删除操作。本页面 UI 已同步 MCSM 面板，所见即所得。'
+          )
+        }}
       </p>
     </div>
   </a-typography-paragraph>
   <a-form layout="horizontal" :model="searchForm" class="flex flex-wrap justify-between">
     <div class="flex flex-wrap gap-4">
       <a-form-item class="mb-0">
-        <a-button class="btn-has-icon" type="primary" size="large">
-          {{ t('保存更改到浏览器') }}
-          <SaveOutlined />
+        <a-button
+          class="btn-has-icon"
+          type="primary"
+          size="large"
+          @click="toCopy(JSON.stringify(appList))"
+        >
+          {{ t('复制当前模板到剪切板') }}
+          <CopyOutlined />
         </a-button>
       </a-form-item>
 
@@ -303,24 +309,12 @@ onMounted(() => {
         </a-button>
       </a-form-item>
 
-      <a-form-item class="mb-0">
+      <!-- <a-form-item class="mb-0">
         <a-button class="btn-has-icon" type="default" size="large" @click="checkRaw">
           {{ t('查看原始文件') }}
           <FileTextOutlined />
         </a-button>
-      </a-form-item>
-
-      <a-form-item class="mb-0">
-        <a-button
-          class="btn-has-icon"
-          type="dashed"
-          size="large"
-          @click="toCopy(JSON.stringify(appList))"
-        >
-          {{ t('复制模板到剪切板') }}
-          <CopyOutlined />
-        </a-button>
-      </a-form-item>
+      </a-form-item> -->
     </div>
 
     <div class="flex flex-wrap gap-4">
