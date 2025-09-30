@@ -41,3 +41,8 @@ export interface QuickStartTemplate {
   }[]
   packages: QuickStartPackages[]
 }
+
+export interface MountComponent {
+  destroyComponent(delay?: number): void
+  emitResult(data?: any): void
+}

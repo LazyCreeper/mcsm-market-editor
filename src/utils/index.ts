@@ -43,3 +43,12 @@ export const toCopy = async (sth: any) => {
     })
   }
 }
+
+export function emptyValueValidator(value: string | number) {
+  if (String(value).trim() === '') throw new Error(t('字段不可为空'))
+  return Promise.resolve()
+}
+
+export async function sleep(t: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, t))
+}
