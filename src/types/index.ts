@@ -1,3 +1,5 @@
+import type { TERMINAL_CODE } from './instance'
+
 export interface NyaResponse<T> {
   status: string
   message: string

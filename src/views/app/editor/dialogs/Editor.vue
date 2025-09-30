@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { t } from '@/utils/i18n'
+import { isCN, t } from '@/utils/i18n'
 import type { QuickStartPackages } from '@/types'
 import { message, type FormInstance } from 'ant-design-vue'
 import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { dockerPortsArray } from '@/utils'
 import { useDockerEnvEditDialog, usePortEditDialog, useVolumeEditDialog } from '@/components/fc'
+import type { Rule } from 'ant-design-vue/es/form'
+import { INSTANCE_TYPE_TRANSLATION, TERMINAL_CODE } from '@/types/instance'
 
 interface FilterOption {
   label: string
@@ -38,11 +40,11 @@ const props = defineProps<{
     setupInfo: {
       startCommand: '',
       stopCommand: '',
-      ie: 'utf-8',
-      oe: 'utf-8',
+      ie: 'UTF-8',
+      oe: 'UTF-8',
       type: '',
       tag: [''],
-      fileCode: 'utf-8',
+      fileCode: 'UTF-8',
       processType: '',
       updateCommand: '',
       docker: {
@@ -62,8 +64,66 @@ const props = defineProps<{
   },
   formRef = ref<FormInstance>(),
   formData = ref<QuickStartPackages>(),
-  index = ref(-1),
   isDockerMode = computed(() => formData.value?.setupInfo?.processType === 'docker'),
+  formRules = computed<Partial<Record<keyof QuickStartPackages, any>>>(() => ({
+    title: [{ required: true, message: t('请输入模板名称') }],
+    language: [{ required: true, message: t('请选择语言') }],
+    platform: [{ required: true, message: t('请选择运行平台') }],
+    description: [{ required: true, message: t('请输入模板介绍') }],
+    image: [{ required: true, message: t('请输入封面URL') }],
+    author: [{ required: true, message: t('请输入模板作者') }],
+
+    gameType: [{ required: true, message: t('请选择一级分类') }],
+    category: [{ required: true, message: t('请选择二级分类') }],
+    runtime: [{ required: true, message: t('请输入环境要求') }],
+    hardware: [{ required: true, message: t('请输入硬件要求') }],
+
+    setupInfo: {
+      startCommand: [
+        {
+          required: true,
+          validator: async (_rule: Rule, value: string) => {
+            if (value === '') throw new Error(t('请输入启动命令'))
+            if (value.includes('\n'))
+              throw new Error(t('启动命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+          },
+          trigger: 'change'
+        }
+      ],
+      stopCommand: [
+        {
+          required: true,
+          validator: async (_rule: Rule, value: string) => {
+            if (value === '') throw new Error(t('请输入停止命令'))
+            if (value.includes('\n'))
+              throw new Error(t('停止命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+          },
+          trigger: 'change'
+        }
+      ],
+      updateCommand: [
+        {
+          required: false,
+          validator: async (_rule: Rule, value: string) => {
+            if (value === '') throw new Error(t('请输入更新命令'))
+            if (value.includes('\n'))
+              throw new Error(t('更新命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+          },
+          trigger: 'change'
+        }
+      ],
+      ie: [{ required: true, message: t('请选择输入编码') }],
+      oe: [{ required: true, message: t('请选择输出编码') }],
+      fileCode: [{ required: true, message: t('请选择文件编码') }],
+      type: [{ required: true, message: t('请选择游戏类型') }],
+
+      docker: {
+        image: [{ required: isDockerMode.value, message: t('请输入镜像名称') }],
+        ports: [{ required: isDockerMode.value, message: t('请设置端口映射') }]
+      }
+    }
+  })),
+  index = ref(-1),
   VNodes = defineComponent({
     props: {
       vnodes: {
@@ -110,6 +170,7 @@ const props = defineProps<{
       editMode.value = true
     } else {
       formData.value = _.cloneDeep(defaultFormData)
+      formData.value.language = isCN() ? 'zh_cn' : 'en_us'
       editMode.value = false
     }
     title.value = editMode.value ? t('编辑模板') : t('新增模板')
@@ -183,13 +244,16 @@ defineExpose({
     @ok="ok"
     @cancel="cancel"
   >
-    <a-form v-if="formData" ref="formRef" :model="formData" layout="vertical">
+    <a-form v-if="formData" ref="formRef" :model="formData" :rules="formRules" layout="vertical">
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" :tab="t('模板信息')">
           <a-row :gutter="20">
             <a-col :span="24" :sm="24" :md="12">
               <a-form-item :label="t('封面图')" name="image">
-                <a-image :src="formData.image" />
+                <a-image
+                  :src="formData.image"
+                  fallback="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 0 0'%3E%3Crect  height='330'/%3E%3C/svg%3E"
+                />
                 <a-input v-model:value="formData.image" />
               </a-form-item>
             </a-col>
@@ -226,7 +290,24 @@ defineExpose({
           </a-row>
 
           <a-row :gutter="20">
-            <a-col :span="8">
+            <a-col :span="6">
+              <a-form-item :label="t('游戏类型')" :name="['setupInfo', 'type']">
+                <a-select
+                  v-if="formData.setupInfo"
+                  v-model:value="formData.setupInfo.type"
+                  show-search
+                >
+                  <a-select-option
+                    v-for="(item, key) in INSTANCE_TYPE_TRANSLATION"
+                    :key="key"
+                    :value="key"
+                  >
+                    {{ item }}
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :span="6">
               <a-form-item :label="t('一级分类（游戏名称）')" name="gameType">
                 <a-select
                   v-model:value="formData.gameType"
@@ -240,7 +321,11 @@ defineExpose({
                     <v-nodes :vnodes="menu" />
                     <a-divider style="margin: 4px 0" />
                     <a-space style="padding: 4px 8px">
-                      <a-input ref="inputRef" v-model:value="searchFormData.appGameTypeList" />
+                      <a-input
+                        ref="inputRef"
+                        size="default"
+                        v-model:value="searchFormData.appGameTypeList"
+                      />
                       <a-button
                         class="btn-has-icon"
                         type="text"
@@ -256,7 +341,7 @@ defineExpose({
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="6">
               <a-form-item :label="t('运行平台')" name="platform">
                 <a-select
                   v-model:value="formData.platform"
@@ -268,7 +353,11 @@ defineExpose({
                     <v-nodes :vnodes="menu" />
                     <a-divider style="margin: 4px 0" />
                     <a-space style="padding: 4px 8px">
-                      <a-input ref="inputRef" v-model:value="searchFormData.appPlatformList" />
+                      <a-input
+                        ref="inputRef"
+                        size="default"
+                        v-model:value="searchFormData.appPlatformList"
+                      />
                       <a-button
                         class="btn-has-icon"
                         type="text"
@@ -284,7 +373,7 @@ defineExpose({
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="6">
               <a-form-item :label="t('二级分类（版本类型）')" name="category">
                 <a-select
                   v-model:value="formData.category"
@@ -296,7 +385,11 @@ defineExpose({
                     <v-nodes :vnodes="menu" />
                     <a-divider style="margin: 4px 0" />
                     <a-space style="padding: 4px 8px">
-                      <a-input ref="inputRef" v-model:value="searchFormData.appCategoryList" />
+                      <a-input
+                        ref="inputRef"
+                        size="default"
+                        v-model:value="searchFormData.appCategoryList"
+                      />
                       <a-button
                         class="btn-has-icon"
                         type="text"
@@ -333,7 +426,10 @@ defineExpose({
           </a-row>
 
           <a-form-item :label="t('安装包下载地址（可选）')" name="targetLink">
-            <a-input v-model:value="formData.targetLink" />
+            <a-input
+              v-model:value="formData.targetLink"
+              :placeholder="t('仅支持游戏官方下载地址及 ZIP 格式文件')"
+            />
           </a-form-item>
 
           <a-form-item :label="t('标签（可选）')" name="tags">
@@ -381,26 +477,26 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('输入编码格式')" :name="['setupInfo', 'ie']">
-                <a-input
-                  v-model:value="formData.setupInfo.ie"
-                  :placeholder="t('建议保持默认值：utf-8')"
-                />
+                <a-select v-model:value="formData.setupInfo.ie" :placeholder="t('请选择')">
+                  <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('输出编码格式')" :name="['setupInfo', 'oe']">
-                <a-input
-                  v-model:value="formData.setupInfo.oe"
-                  :placeholder="t('建议保持默认值：utf-8')"
-                />
+                <a-select v-model:value="formData.setupInfo.oe" :placeholder="t('请选择')">
+                  <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('文件编码格式')" :name="['setupInfo', 'fileCode']">
-                <a-input
-                  v-model:value="formData.setupInfo.fileCode"
-                  :placeholder="t('建议保持默认值：utf-8')"
-                />
+                <a-select v-model:value="formData.setupInfo.fileCode" :placeholder="t('请选择')">
+                  <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
+                  </a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
