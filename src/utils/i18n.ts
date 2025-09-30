@@ -60,7 +60,9 @@ const getSupportLanguages = (): string[] => {
 }
 
 const searchSupportLanguage = (lang: string) => {
-  const findLang = getSupportLanguages().find((v) => v.includes(toStandardLang(lang)))
+  const findLang = getSupportLanguages().find((v) =>
+    v.toLocaleLowerCase().includes(toStandardLang(lang).toLocaleLowerCase())
+  )
   if (findLang) return findLang
   return 'zh-CN'
 }
