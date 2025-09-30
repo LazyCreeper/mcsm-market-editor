@@ -88,6 +88,7 @@ const props = defineProps<{
     appPlatformList: '',
     appCategoryList: ''
   }),
+  // TODO：删除无用的项
   addOption = (item: string, category: keyof typeof selectOptions.value) => {
     selectOptions.value[category].push({
       label: item,
@@ -220,12 +221,56 @@ defineExpose({
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('运行平台')" name="platform">
-                <a-input v-model:value="formData.platform" />
+                <a-select
+                  v-model:value="formData.platform"
+                  show-search
+                  :placeholder="t('所有系统')"
+                  :options="selectOptions.appPlatformList"
+                >
+                  <template #dropdownRender="{ menuNode: menu }">
+                    <v-nodes :vnodes="menu" />
+                    <a-divider style="margin: 4px 0" />
+                    <a-space style="padding: 4px 8px">
+                      <a-input ref="inputRef" v-model:value="searchFormData.appPlatformList" />
+                      <a-button
+                        type="text"
+                        @click="addOption(searchFormData.appPlatformList, 'appPlatformList')"
+                      >
+                        <template #icon>
+                          <PlusOutlined />
+                        </template>
+                        {{ t('添加') }}
+                      </a-button>
+                    </a-space>
+                  </template>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('二级分类（版本类型）')" name="category">
-                <a-input v-model:value="formData.category" />
+                <a-select
+                  v-model:value="formData.category"
+                  show-search
+                  :placeholder="t('最新版本')"
+                  :options="selectOptions.appCategoryList"
+                >
+                  <template #dropdownRender="{ menuNode: menu }">
+                    <v-nodes :vnodes="menu" />
+                    <a-divider style="margin: 4px 0" />
+                    <a-space style="padding: 4px 8px">
+                      <a-input ref="inputRef" v-model:value="searchFormData.appCategoryList" />
+                      <a-button
+                        type="text"
+                        @click="addOption(searchFormData.appCategoryList, 'appCategoryList')"
+                      >
+                        <template #icon>
+                          <PlusOutlined />
+                        </template>
+                        {{ t('添加') }}
+                      </a-button>
+                    </a-space>
+                  </template>
+                </a-select>
               </a-form-item>
             </a-col>
           </a-row>
