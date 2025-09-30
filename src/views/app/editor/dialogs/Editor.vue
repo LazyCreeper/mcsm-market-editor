@@ -206,6 +206,7 @@ defineExpose({
                     <a-space style="padding: 4px 8px">
                       <a-input ref="inputRef" v-model:value="searchFormData.appGameTypeList" />
                       <a-button
+                        class="btn-has-icon"
                         type="text"
                         @click="addOption(searchFormData.appGameTypeList, 'appGameTypeList')"
                       >
@@ -233,6 +234,7 @@ defineExpose({
                     <a-space style="padding: 4px 8px">
                       <a-input ref="inputRef" v-model:value="searchFormData.appPlatformList" />
                       <a-button
+                        class="btn-has-icon"
                         type="text"
                         @click="addOption(searchFormData.appPlatformList, 'appPlatformList')"
                       >
@@ -260,6 +262,7 @@ defineExpose({
                     <a-space style="padding: 4px 8px">
                       <a-input ref="inputRef" v-model:value="searchFormData.appCategoryList" />
                       <a-button
+                        class="btn-has-icon"
                         type="text"
                         @click="addOption(searchFormData.appCategoryList, 'appCategoryList')"
                       >
@@ -297,9 +300,12 @@ defineExpose({
             <a-input v-model:value="formData.targetLink" />
           </a-form-item>
 
-          <!-- TODO: select 标签 -->
           <a-form-item :label="t('标签（可选）')" name="tags">
-            <a-input v-model:value="formData.tags" />
+            <a-select
+              v-model:value="formData.tags"
+              mode="tags"
+              :token-separators="[',']"
+            ></a-select>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane v-if="formData.setupInfo" key="2" :tab="t('服务器配置与运行信息')" force-render>
@@ -365,7 +371,11 @@ defineExpose({
 
           <!-- TODO: select 标签 -->
           <a-form-item :label="t('附加标签（可选）')" :name="['setupInfo', 'tag']">
-            <a-input v-model:value="formData.setupInfo.tag" />
+            <a-select
+              v-model:value="formData.setupInfo.tag"
+              mode="tags"
+              :token-separators="[',']"
+            ></a-select>
           </a-form-item>
         </a-tab-pane>
         <a-tab-pane v-if="formData.setupInfo?.docker" key="3" :tab="t('Docker 配置')" force-render>
