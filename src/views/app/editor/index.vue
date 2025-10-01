@@ -6,12 +6,13 @@ import { isCN, t } from '@/utils/i18n'
 import {
   CopyOutlined,
   DatabaseOutlined,
+  DeleteOutlined,
   DownloadOutlined,
+  DownOutlined,
   EditOutlined,
-  FileTextOutlined,
   LoadingOutlined,
   PlusOutlined,
-  SaveOutlined
+  SelectOutlined
 } from '@ant-design/icons-vue'
 import { useRouteQuery } from '@vueuse/router'
 import { message } from 'ant-design-vue'
@@ -20,7 +21,6 @@ import Editor from './dialogs/Editor.vue'
 import _ from 'lodash'
 
 const url = useRouteQuery('url', '', { transform: String })
-
 const appList = ref<QuickStartTemplate>()
 const appListLoading = ref(false)
 const fetchTemplate = async () => {
@@ -237,18 +237,15 @@ const downloadMarketJson = () => {
   message.success(t('已开始下载...'))
 }
 
+const findFn = (pkg: QuickStartPackages, item: QuickStartPackages) =>
+  pkg.targetLink === item.targetLink &&
+  pkg.title === item.title &&
+  pkg.gameType === item.gameType &&
+  pkg.language === item.language &&
+  pkg.category === item.category
 const editorRef = ref<InstanceType<typeof Editor>>()
-const rawItem = ref<QuickStartPackages>()
 const toEdit = (item: QuickStartPackages) => {
-  rawItem.value = item
-  const actualIndex = appList.value?.packages.findIndex(
-    (pkg) =>
-      pkg.targetLink === rawItem.value?.targetLink &&
-      pkg.title === rawItem.value?.title &&
-      pkg.gameType === rawItem.value?.gameType &&
-      pkg.language === rawItem.value?.language &&
-      pkg.category === rawItem.value?.category
-  )
+  const actualIndex = appList.value?.packages.findIndex((pkg) => findFn(pkg, item))
   editorRef?.value?.open(item, actualIndex)
 }
 
@@ -260,6 +257,47 @@ const save = (item: QuickStartPackages, i: number) => {
   } else {
     appList.value.packages[i] = item
   }
+}
+
+const multipleMode = ref(false)
+const selectedItems = ref<QuickStartPackages[]>([])
+const toMultiMode = () => {
+  multipleMode.value = true
+}
+
+const findItem = (item: QuickStartPackages) => selectedItems.value.find((i) => findFn(i, item))
+
+const selectItem = (item: QuickStartPackages) => {
+  if (findItem(item)) {
+    selectedItems.value.splice(selectedItems.value.indexOf(item), 1)
+  } else {
+    selectedItems.value.push(item)
+  }
+}
+
+const handleSelectItem = (item: QuickStartPackages) => {
+  if (item.isSummary) return
+  if (multipleMode.value) {
+    selectItem(item)
+  } else {
+    toEdit(item)
+  }
+}
+
+const selectAllItems = () => {
+  if (dynamicList.value.length === selectedItems.value.length) {
+    selectedItems.value = []
+  } else {
+    for (const item of dynamicList.value) {
+      if (findItem(item)) continue
+      selectedItems.value.push(item)
+    }
+  }
+}
+
+const exitMultipleMode = () => {
+  multipleMode.value = false
+  selectedItems.value = []
 }
 
 onMounted(() => {
@@ -318,8 +356,45 @@ onMounted(() => {
     </div>
 
     <div class="flex flex-wrap gap-4">
-      <a-form-item class="mb-0">
-        <a-button class="btn-has-icon" type="default" size="large">
+      <template v-if="multipleMode">
+        <a-form-item class="mb-0">
+          <a-button class="btn-has-icon" type="default" size="large" @click="exitMultipleMode">
+            {{ t('退出批量操作') }}
+          </a-button>
+        </a-form-item>
+
+        <a-form-item class="mb-0">
+          <a-button class="btn-has-icon" type="default" size="large" @click="selectAllItems">
+            {{ dynamicList.length === selectedItems.length ? t('取消全选') : t('全选') }}
+          </a-button>
+        </a-form-item>
+        <a-dropdown>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item
+                v-for="item in [
+                  {
+                    title: t('删除'),
+                    icon: DeleteOutlined,
+                    click: () => {}
+                  }
+                ]"
+                :key="item.title"
+                @click="item.click"
+              >
+                <component :is="item.icon" />
+                {{ item.title }}
+              </a-menu-item>
+            </a-menu>
+          </template>
+          <a-button class="btn-has-icon" size="large" type="primary">
+            {{ t('选中项') }}
+            <DownOutlined />
+          </a-button>
+        </a-dropdown>
+      </template>
+      <a-form-item v-else class="mb-0">
+        <a-button class="btn-has-icon" type="default" size="large" @click="toMultiMode">
           {{ t('批量操作') }}
         </a-button>
       </a-form-item>
@@ -473,7 +548,11 @@ onMounted(() => {
     >
       <!-- Individual package card -->
       <div style="display: flex; flex-grow: 1; flex-direction: column; height: 100%">
-        <CardPanel style="flex-grow: 1" :style="{ padding: '12px' }" :full-height="!item.isSummary">
+        <CardPanel
+          style="flex-grow: 1; padding: 12px"
+          :class="{ selected: multipleMode && findItem(item) }"
+          :full-height="!item.isSummary"
+        >
           <!-- Package content -->
           <template #body>
             <div class="package-card-content">
@@ -525,13 +604,14 @@ onMounted(() => {
                   type="primary"
                   size="large"
                   class="download-button btn-has-icon"
-                  @click="toEdit(item)"
+                  @click="handleSelectItem(item)"
                 >
                   <!-- 要获取原来在applist里面的 i,而不是筛选过后的i -->
                   <template #icon>
-                    <DownloadOutlined />
+                    <SelectOutlined v-if="multipleMode" />
+                    <DownloadOutlined v-else />
                   </template>
-                  {{ t('安装') }}
+                  {{ multipleMode ? (findItem(item) ? t('取消选择') : t('选择')) : t('安装') }}
                 </a-button>
 
                 <a-button
@@ -635,6 +715,17 @@ onMounted(() => {
   background: linear-gradient(45deg, #1890ff, #40a9ff);
   border: none;
   animation: pulse-glow 2s infinite;
+}
+
+.selected {
+  border: 1px solid var(--color-blue-6);
+  user-select: none;
+
+  &:hover {
+    border: 1px solid var(--color-blue-6);
+    transition: all 0.3s;
+    box-shadow: inset 0 0 0 0.5px var(--color-blue-6);
+  }
 }
 
 @keyframes pulse-glow {
