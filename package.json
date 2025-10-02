@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "i18n": "i18next-scanner --config i18-scanner.config.cjs"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -33,6 +34,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
     "autoprefixer": "^10.4.21",
+    "crc": "^4.3.2",
     "eslint": "^9.36.0",
     "eslint-plugin-vue": "^10.5.0",
     "i18next-scanner": "^4.6.0",

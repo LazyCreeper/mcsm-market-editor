@@ -76,6 +76,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.21
     version: 10.4.21(postcss@8.5.6)
+  crc:
+    specifier: ^4.3.2
+    version: 4.3.2
   eslint:
     specifier: ^9.36.0
     version: 9.36.0
@@ -1923,6 +1926,16 @@ packages:
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+    dev: true
+
+  /crc@4.3.2:
+    resolution: {integrity: sha512-uGDHf4KLLh2zsHa8D8hIQ1H/HtFQhyHrc0uhHBcoKGol/Xnb+MPYfUMw7cvON6ze/GUESTudKayDcJC5HnJv1A==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      buffer: '>=6.0.3'
+    peerDependenciesMeta:
+      buffer:
+        optional: true
     dev: true
 
   /cross-spawn@7.0.6:

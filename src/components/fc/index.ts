@@ -20,28 +20,28 @@ export async function usePortEditDialog(data: PortConfigItem[] = []) {
   return (
     (await useMountComponent({
       data,
-      title: t('容器端口映射配置'),
+      title: t('TXT_CODE_c4435af9'),
       subtitle: t(
-        '默认情况下，MCSManager 为每个实例按序分配 5 个端口，支持填写 {mcsm_port1} 到 {mcsm_port5}，为按序新增的端口号。'
+        'TXT_CODE_56b9e6af'
       ),
       columns: [
         {
           align: 'center',
           dataIndex: 'host',
-          title: t('主机端口'),
+          title: t('TXT_CODE_534db0b2'),
           placeholder: 'eg: 8080 or {mcsm_port1}',
           minWidth: 200
         },
         {
           align: 'center',
           dataIndex: 'container',
-          title: t('容器端口'),
+          title: t('TXT_CODE_b729d2e'),
           placeholder: 'eg: 25565 or {mcsm_port1}'
         },
         {
           align: 'center',
           dataIndex: 'protocol',
-          title: t('协议'),
+          title: t('TXT_CODE_ad1c674c'),
           placeholder: 'TCP/UDP'
         }
       ] as AntColumnsType[]
@@ -54,19 +54,19 @@ export async function useVolumeEditDialog(data: DockerConfigItem[] = []) {
     (await useMountComponent({
       data,
       subtitle: t(
-        '用于挂载主机上额外的文件夹到容器中，支持 &lbrace;mcsm_workspace&rbrace;（工作目录）和 &lbrace;mcsm_instance_id&rbrace;（实例ID）两个变量字符串。'
+        'TXT_CODE_77083c51'
       ),
-      title: t('挂载目录到容器'),
+      title: t('TXT_CODE_820ebc92'),
       columns: [
         {
           align: 'center',
           dataIndex: 'host',
-          title: t('主机目录')
+          title: t('TXT_CODE_681aaeb9')
         },
         {
           align: 'center',
           dataIndex: 'container',
-          title: t('容器目录')
+          title: t('TXT_CODE_30258325')
         }
       ] as AntColumnsType[]
     }).mount<DockerConfigItem[]>(KvOptionsDialogVue)) || []
@@ -77,17 +77,17 @@ export async function useDockerEnvEditDialog(data: DockerEnvItem[] = []) {
   return (
     (await useMountComponent({
       data,
-      title: t('容器环境变量'),
+      title: t('TXT_CODE_90a9d317'),
       columns: [
         {
           align: 'center',
           dataIndex: 'label',
-          title: t('变量名')
+          title: t('TXT_CODE_a42984e')
         },
         {
           align: 'center',
           dataIndex: 'value',
-          title: t('变量值')
+          title: t('TXT_CODE_115e8a25')
         }
       ] as AntColumnsType[]
     }).mount<DockerEnvItem[]>(KvOptionsDialogVue)) || []

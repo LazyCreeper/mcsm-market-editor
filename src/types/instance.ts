@@ -38,10 +38,10 @@ export const TYPE_TERRARIA = 'steam/terraria'
 export const INSTANCE_TYPE_TRANSLATION: {
   [key: string]: string
 } = {
-  [TYPE_UNIVERSAL]: t('通用控制台程序'),
-  [TYPE_STEAM_SERVER_UNIVERSAL]: t('Steam 游戏服务器'),
-  [TYPE_MINECRAFT_JAVA]: t('MC Java 版服务端'),
-  [TYPE_MINECRAFT_BEDROCK]: t('MC Bedrock 版服务端'),
+  [TYPE_UNIVERSAL]: t('TXT_CODE_8a3eaa01'),
+  [TYPE_STEAM_SERVER_UNIVERSAL]: t('TXT_CODE_dd8d27ce'),
+  [TYPE_MINECRAFT_JAVA]: t('TXT_CODE_b3a359b1'),
+  [TYPE_MINECRAFT_BEDROCK]: t('TXT_CODE_18241fdb'),
   [TYPE_MINECRAFT_NUKKIT]: 'MC Nukkit',
   [TYPE_MINECRAFT_SPIGOT]: 'MC Spigot',
   [TYPE_MINECRAFT_PAPER]: 'MC Paper',
@@ -58,5 +58,5 @@ export const INSTANCE_TYPE_TRANSLATION: {
   [TYPE_MINECRAFT_GEYSER]: 'MC Geyser',
   [TYPE_MINECRAFT_MCDR]: 'MC MCDR',
   [TYPE_WEB_SHELL]: 'Web Shell',
-  [TYPE_TERRARIA]: t('泰拉瑞亚')
+  [TYPE_TERRARIA]: t('TXT_CODE_d4b2ca09')
 }

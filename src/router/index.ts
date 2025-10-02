@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: t('模板编辑器'),
+      name: t('TXT_CODE_54275b9c'),
       component: () => import('@/views/home/HomeView.vue'),
       meta: {}
     },
@@ -27,7 +27,7 @@ const router = createRouter({
         },
         {
           path: 'login',
-          name: t('登录'),
+          name: t('TXT_CODE_d2c1a316'),
           component: () => import('@/views/auth/Login.vue'),
           meta: {
             image: '',
@@ -36,7 +36,7 @@ const router = createRouter({
         },
         {
           path: 'register',
-          name: t('注册'),
+          name: t('TXT_CODE_8899f89f'),
           component: () => import('@/views/auth/Register.vue'),
           meta: {
             image: '',
@@ -45,7 +45,7 @@ const router = createRouter({
         },
         {
           path: 'reset',
-          name: t('重置密码'),
+          name: t('TXT_CODE_3217837'),
           component: () => import('@/views/auth/Reset.vue'),
           meta: {
             image: '',
@@ -73,7 +73,7 @@ const router = createRouter({
 
         {
           path: 'dashboard',
-          name: t('仪表板'),
+          name: t('TXT_CODE_e4456ae3'),
           component: () => import('@/views/app/dashboard/index.vue'),
           meta: {
             mainMenu: false
@@ -82,7 +82,7 @@ const router = createRouter({
 
         {
           path: 'editor',
-          name: t('编辑器'),
+          name: t('TXT_CODE_32a4d9fb'),
           component: () => import('@/views/app/editor/index.vue'),
           meta: {
             mainMenu: false
@@ -127,8 +127,8 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.needLogin && !isLogin.value) {
     notification.error({
-      message: t('错误'),
-      description: t('未授权的访问，请先登录')
+      message: t('TXT_CODE_ac405b50'),
+      description: t('TXT_CODE_ff0435d4')
     })
     return next('/auth/login')
   }
@@ -143,7 +143,7 @@ router.beforeEach((to, from, next) => {
     })
   }
 
-  document.title = (to.meta.title || t('模板编辑器')) + ' - MCSManager'
+  document.title = (to.meta.title || t('TXT_CODE_54275b9c')) + ' - MCSManager'
 
   next()
 })

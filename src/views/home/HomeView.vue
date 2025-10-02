@@ -8,7 +8,7 @@ import { md } from '@/hooks/useResponsive'
 const templateUrl = ref('https://script.mcsmanager.com/market.json')
 
 const handleSubmit = () => {
-  if (!templateUrl.value) return message.error(t('请输入模板地址'))
+  if (!templateUrl.value) return message.error(t('TXT_CODE_ac10fe01'))
   router.push({
     path: '/app/editor',
     query: {
@@ -29,7 +29,7 @@ const handleSubmit = () => {
           </span>
         </h1>
         <p class="mt-4 mb-8 text-base sm:text-lg lg:text-xl">
-          {{ t('适用于 MCSManager {0} 的应用市场模板编辑器', ['10']) }}
+          {{ t('TXT_CODE_1f190ead', ['10.8.7']) }}
         </p>
         <a-form
           layout="horizontal"
@@ -40,7 +40,7 @@ const handleSubmit = () => {
           <a-row :gutter="25">
             <a-col :span="24" :lg="16">
               <a-form-item>
-                <a-input v-model:value="templateUrl" :placeholder="t('请输入模板地址')" />
+                <a-input v-model:value="templateUrl" :placeholder="t('TXT_CODE_ac10fe01')" />
               </a-form-item>
             </a-col>
             <a-col :span="24" :lg="8">
@@ -52,7 +52,7 @@ const handleSubmit = () => {
                   @click="handleSubmit"
                   :icon="h(SlackOutlined)"
                 >
-                  {{ t('开始编辑') }}
+                  {{ t('TXT_CODE_5ead1240') }}
                 </a-button>
               </a-form-item>
             </a-col>

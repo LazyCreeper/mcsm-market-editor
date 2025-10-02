@@ -31,7 +31,7 @@ const fetchTemplate = async () => {
     const { data } = await axios.get(url.value)
     appList.value = data
   } catch (error) {
-    message.error(t('获取模板失败') + `${error}`)
+    message.error(t('TXT_CODE_aa13fde2') + `${error}`)
   } finally {
     appListLoading.value = false
   }
@@ -181,21 +181,21 @@ const appLangList = computed(() => {
 
 const appGameTypeList = computed(() => {
   const packages = getFilteredPackages(matchesLanguageFilter)
-  return generateOptionsList(packages, 'gameType', t('所有游戏'))
+  return generateOptionsList(packages, 'gameType', t('TXT_CODE_107695d'))
 })
 
 const appCategoryList = computed(() => {
   const packages = getFilteredPackages(
     (item) => matchesLanguageFilter(item) && matchesGameTypeFilter(item)
   )
-  return generateOptionsList(packages, 'category', t('所有版本'))
+  return generateOptionsList(packages, 'category', t('TXT_CODE_2af87548'))
 })
 
 const appPlatformList = computed(() => {
   const packages = getFilteredPackages(
     (item) => matchesLanguageFilter(item) && matchesGameTypeFilter(item)
   )
-  return generateOptionsList(packages, 'platform', t('所有系统'))
+  return generateOptionsList(packages, 'platform', t('TXT_CODE_47203b64'))
 })
 
 const handleReset = () => {
@@ -221,7 +221,7 @@ const handlePlatformChange = () => {
 }
 
 const downloadMarketJson = () => {
-  if (!appList.value) return message.warning(t('暂无数据可下载'))
+  if (!appList.value) return message.warning(t('TXT_CODE_8e223f23'))
   const dataStr = JSON.stringify(appList.value, null, 2)
   const blob = new Blob([dataStr], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
@@ -232,7 +232,7 @@ const downloadMarketJson = () => {
   link.click()
   document.body.removeChild(link)
   URL.revokeObjectURL(url)
-  message.success(t('已开始下载...'))
+  message.success(t('TXT_CODE_38fb23a8'))
 }
 
 const findFn = (pkg: QuickStartPackages, item: QuickStartPackages) =>
@@ -301,14 +301,14 @@ const exitMultipleMode = () => {
 }
 
 const batchDelete = () => {
-  if (selectedItems.value.length === 0) return message.warning(t('请选择要删除的项'))
+  if (selectedItems.value.length === 0) return message.warning(t('TXT_CODE_72952e19'))
   for (const item of selectedItems.value) {
     const index = appList.value?.packages.findIndex((pkg) => findFn(pkg, item))
     if (Number(index) < 0) continue
     appList.value?.packages.splice(Number(index), 1)
   }
   selectedItems.value = []
-  message.success(t('删除成功'))
+  message.success(t('TXT_CODE_28190dbc'))
 }
 
 onMounted(() => {
@@ -320,17 +320,17 @@ onMounted(() => {
   <div class="my-8"></div>
   <a-typography-title :level="3" style="margin-bottom: 8px">
     <EditOutlined />
-    {{ t('编辑器选项 & 说明') }}
+    {{ t('TXT_CODE_dfd4fc5a') }}
   </a-typography-title>
   <a-typography-paragraph>
     <div>
       {{
         t(
-          '点击“查看”即可查看当前分类下的所有模板，点击“安装”即可编辑模板信息，点击“批量编辑”进行删除操作。'
+          'TXT_CODE_372e7b9c'
         )
       }}
     </div>
-    <div class="opacity-70">*{{ t('开发中页面，可能是最终品质 ԅ(¯﹃¯ԅ)') }}</div>
+    <div class="opacity-70">*{{ t('TXT_CODE_24821a7e') }}</div>
   </a-typography-paragraph>
   <a-form layout="horizontal" :model="searchForm" class="flex flex-wrap justify-between">
     <div class="flex flex-wrap gap-4">
@@ -341,7 +341,7 @@ onMounted(() => {
           size="large"
           @click="toCopy(JSON.stringify(appList))"
         >
-          {{ t('复制当前模板到剪切板') }}
+          {{ t('TXT_CODE_29efd001') }}
           <CopyOutlined />
         </a-button>
       </a-form-item>
@@ -352,14 +352,14 @@ onMounted(() => {
           size="large"
           @click="downloadMarketJson"
         >
-          {{ t('下载修改后的文件') }}
+          {{ t('TXT_CODE_c5a46eba') }}
           <DownloadOutlined />
         </a-button>
       </a-form-item>
 
       <!-- <a-form-item class="mb-0">
         <a-button class="btn-has-icon" type="default" size="large" @click="checkRaw">
-          {{ t('查看原始文件') }}
+          {{ t('TXT_CODE_9f1885b4') }}
           <FileTextOutlined />
         </a-button>
       </a-form-item> -->
@@ -368,18 +368,18 @@ onMounted(() => {
     <div class="flex flex-wrap gap-4">
       <template v-if="multipleMode">
         <a-form-item class="mb-0">
-          <div class="p-[8px]">{{ t('已选择') }}: {{ selectedItems.length }} {{ t('项') }}</div>
+          <div class="p-[8px]">{{ t('TXT_CODE_379fa48a') }}: {{ selectedItems.length }} {{ t('TXT_CODE_5cd3b4bd') }}</div>
         </a-form-item>
 
         <a-form-item class="mb-0">
           <a-button class="btn-has-icon" type="default" size="large" @click="exitMultipleMode">
-            {{ t('退出批量操作') }}
+            {{ t('TXT_CODE_5366af54') }}
           </a-button>
         </a-form-item>
 
         <a-form-item class="mb-0">
           <a-button class="btn-has-icon" type="default" size="large" @click="selectAllItems">
-            {{ dynamicList.length === selectedItems.length ? t('取消全选') : t('全选') }}
+            {{ dynamicList.length === selectedItems.length ? t('TXT_CODE_df87c46d') : t('TXT_CODE_f466d7a') }}
           </a-button>
         </a-form-item>
         <a-dropdown>
@@ -388,7 +388,7 @@ onMounted(() => {
               <a-menu-item
                 v-for="item in [
                   {
-                    title: t('删除'),
+                    title: t('TXT_CODE_ecbd7449'),
                     icon: DeleteOutlined,
                     click: batchDelete
                   }
@@ -402,20 +402,20 @@ onMounted(() => {
             </a-menu>
           </template>
           <a-button class="btn-has-icon" size="large" type="primary">
-            {{ t('选中项') }}
+            {{ t('TXT_CODE_8fd8bfd3') }}
             <DownOutlined />
           </a-button>
         </a-dropdown>
       </template>
       <a-form-item v-else class="mb-0">
         <a-button class="btn-has-icon" type="default" size="large" @click="toMultiMode">
-          {{ t('批量操作') }}
+          {{ t('TXT_CODE_5cb656b9') }}
         </a-button>
       </a-form-item>
 
       <a-form-item class="mb-0">
         <a-button class="button-color-success btn-has-icon" size="large" @click="editorRef?.open()">
-          {{ t('新增模板') }}
+          {{ t('TXT_CODE_3d45d8d') }}
           <PlusOutlined />
         </a-button>
       </a-form-item>
@@ -424,17 +424,17 @@ onMounted(() => {
 
   <a-typography-title :level="3" style="margin-bottom: 8px">
     <DatabaseOutlined />
-    {{ t('模板市场') }}
+    {{ t('TXT_CODE_82ca0616') }}
   </a-typography-title>
   <a-typography-paragraph>
     <div>
       <p>
         <span>{{
-          t('您可以通过下拉框筛选游戏，选择模板并进行安装，请确保系统已安装游戏需要的运行时环境。')
+          t('TXT_CODE_c9ce7427')
         }}</span>
         <!-- <span v-if="onlyDockerTemplate">
           <br />
-          {{ t("由于实例类型为 Docker 容器模式，我们将只展示 Docker 版的模板。") }}
+          {{ t("TXT_CODE_de9b7cc0") }}
           <br />
         </span> -->
       </p>
@@ -465,7 +465,7 @@ onMounted(() => {
           />
         </div>
         <div style="margin-top: 20px; color: var(--color-gray-12)">
-          {{ t('加载中，如果长期无反应，请检查网络。') }}
+          {{ t('TXT_CODE_7fca723a') }}
         </div>
       </div>
     </a-col>
@@ -483,7 +483,7 @@ onMounted(() => {
           <a-select
             v-model:value="searchForm.language"
             style="width: 200px"
-            :placeholder="t('所有语言')"
+            :placeholder="t('TXT_CODE_81aff02b')"
             @change="handleLanguageChange"
           >
             <a-select-option v-for="item in appLangList" :key="item.value" :value="item.value">
@@ -497,7 +497,7 @@ onMounted(() => {
           <a-select
             v-model:value="searchForm.gameType"
             style="width: 200px"
-            :placeholder="t('所有游戏')"
+            :placeholder="t('TXT_CODE_107695d')"
             @change="handleGameTypeChange"
           >
             <a-select-option v-for="item in appGameTypeList" :key="item.value" :value="item.value">
@@ -511,7 +511,7 @@ onMounted(() => {
           <a-select
             v-model:value="searchForm.platform"
             style="width: 200px"
-            :placeholder="t('所有系统')"
+            :placeholder="t('TXT_CODE_47203b64')"
             @change="handlePlatformChange"
           >
             <a-select-option v-for="item in appPlatformList" :key="item.value" :value="item.value">
@@ -525,7 +525,7 @@ onMounted(() => {
           <a-select
             v-model:value="searchForm.category"
             style="width: 200px"
-            :placeholder="t('所有类别')"
+            :placeholder="t('TXT_CODE_ebbb2def')"
           >
             <a-select-option v-for="item in appCategoryList" :key="item.value" :value="item.value">
               {{ item.label }}
@@ -535,7 +535,7 @@ onMounted(() => {
 
         <a-form-item class="mb-0">
           <a-button type="default" size="large" @click="handleReset">
-            {{ t('重置所有筛选条件') }}
+            {{ t('TXT_CODE_e4c71d84') }}
           </a-button>
         </a-form-item>
       </a-form>
@@ -545,7 +545,7 @@ onMounted(() => {
     <a-col v-if="dynamicList.length === 0" :span="24">
       <div style="display: flex; justify-content: center; align-items: center; height: 40vh">
         <a-typography-paragraph :style="{ color: 'var(--color-gray-7)' }">
-          {{ t('无可用模板') }}
+          {{ t('TXT_CODE_c0eefecc') }}
         </a-typography-paragraph>
       </div>
     </a-col>
@@ -583,7 +583,7 @@ onMounted(() => {
                     <a-tag v-if="item.platform" color="cyan">
                       {{
                         String(item.platform).toLowerCase() === 'all'
-                          ? t('所有平台')
+                          ? t('TXT_CODE_9693b0e1')
                           : item.platform
                       }}
                     </a-tag>
@@ -600,11 +600,11 @@ onMounted(() => {
                       </span>
                     </p>
                     <p v-if="item.runtime">
-                      <span style="opacity: 0.6">{{ t('环境需求') }}: </span>
+                      <span style="opacity: 0.6">{{ t('TXT_CODE_80c85070') }}: </span>
                       <span>{{ item.runtime }}</span>
                     </p>
                     <p v-if="item.hardware">
-                      <span style="opacity: 0.6">{{ t('硬件要求') }}: </span>
+                      <span style="opacity: 0.6">{{ t('TXT_CODE_683e3033') }}: </span>
                       <span>{{ item.hardware }}</span>
                     </p>
                   </a-typography-text>
@@ -625,7 +625,7 @@ onMounted(() => {
                     <SelectOutlined v-if="multipleMode" />
                     <DownloadOutlined v-else />
                   </template>
-                  {{ multipleMode ? (findItem(item) ? t('取消选择') : t('选择')) : t('安装') }}
+                  {{ multipleMode ? (findItem(item) ? t('TXT_CODE_abedfd03') : t('TXT_CODE_7b2c5414')) : t('TXT_CODE_1704ea49') }}
                 </a-button>
 
                 <a-button
@@ -636,7 +636,7 @@ onMounted(() => {
                   class="download-button btn-has-icon"
                   @click="searchForm.gameType = item.gameType"
                 >
-                  {{ t('查看') }}
+                  {{ t('TXT_CODE_530f5951') }}
                 </a-button>
               </div>
             </div>

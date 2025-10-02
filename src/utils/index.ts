@@ -30,22 +30,22 @@ export const toCopy = async (sth: any) => {
       input.select()
       document.execCommand('copy')
       document.body.removeChild(input)
-      return message.success(t('复制成功'))
+      return message.success(t('TXT_CODE_b858d78a'))
     } else {
       await copy(sth)
-      if (copied.value) return message.success(t('复制成功'))
+      if (copied.value) return message.success(t('TXT_CODE_b858d78a'))
     }
   } catch (err: any) {
     console.error(err)
     Modal.error({
-      title: t('复制失败，请手动复制以下内容'),
+      title: t('TXT_CODE_ec393077'),
       content: sth
     })
   }
 }
 
 export function emptyValueValidator(value: string | number) {
-  if (String(value).trim() === '') throw new Error(t('字段不可为空'))
+  if (String(value).trim() === '') throw new Error(t('TXT_CODE_cb08d342'))
   return Promise.resolve()
 }
 

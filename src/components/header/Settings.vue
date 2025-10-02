@@ -27,7 +27,7 @@ const status = ref(false),
       currentSettings.value = { ...formData.value }
 
       initAppTheme()
-      message.success(t('保存成功'))
+      message.success(t('TXT_CODE_a7907771'))
       cancel()
     } finally {
       loading.value = false
@@ -47,13 +47,13 @@ const status = ref(false),
     v-model:open="status"
     centered
     class="min-w-[50svw]"
-    :title="t('设置')"
+    :title="t('TXT_CODE_b5c7b82d')"
     :mask-closable="false"
     @ok="ok"
     @cancel="cancel"
   >
     <a-form v-if="formData" ref="formRef" :model="formData" layout="vertical">
-      <a-form-item :label="t('网站背景图')" name="bg">
+      <a-form-item :label="t('TXT_CODE_ce8a0658')" name="bg">
         <a-input v-model:value="formData.bg" />
       </a-form-item>
     </a-form>

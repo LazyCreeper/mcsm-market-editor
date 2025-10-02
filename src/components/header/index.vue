@@ -63,7 +63,7 @@ const menus = computed(() => {
 
         <div class="nav-button" @click="$router.push('/')">
           <!-- <span>{{ router.currentRoute.value.name }}</span> -->
-          <span>{{ t('首页') }}</span>
+          <span>{{ t('TXT_CODE_4de11e23') }}</span>
         </div>
 
         <div

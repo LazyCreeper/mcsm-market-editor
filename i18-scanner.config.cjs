@@ -15,8 +15,8 @@ module.exports = {
     lngs: LANGUAGES,
     defaultLng: 'zh',
     resource: {
-      loadPath: './public/languages/{{lng}}.json',
-      savePath: './public/languages/{{lng}}.json',
+      loadPath: './src/languages/{{lng}}.json',
+      savePath: './src/languages/{{lng}}.json',
       jsonIndent: 2,
       lineEnding: '\n'
     },

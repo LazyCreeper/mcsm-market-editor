@@ -34,7 +34,7 @@ const submit = async () => {
     await formInstance.value?.validate()
   } catch (error: any) {
     console.error(error)
-    return message.error(t('操作失败'))
+    return message.error(t('TXT_CODE_6a365d01'))
   }
   if (props.emitResult) props.emitResult(dataSource.value)
   await cancel()
@@ -48,7 +48,7 @@ const columns = computed<AntColumnsType[]>(() => {
         align: 'center',
         key: 'operation',
         dataIndex: 'operation',
-        title: t('操作')
+        title: t('TXT_CODE_fe731dfc')
       }
     ]
   }
@@ -69,7 +69,7 @@ const columns = computed<AntColumnsType[]>(() => {
       align: 'center',
       key: 'operation',
       dataIndex: 'operation',
-      title: t('操作')
+      title: t('TXT_CODE_fe731dfc')
     }
   ]
 })
@@ -109,7 +109,7 @@ const operation = (type: 'add' | 'del', index = 0) => {
       </div>
       <div class="mb-4 flex justify-end">
         <a-button :icon="h(PlusCircleOutlined)" @click="operation('add')">
-          {{ t('新增配置') }}
+          {{ t('TXT_CODE_dfc17a0c') }}
         </a-button>
       </div>
       <a-form ref="formInstance" :model="dataSource" name="validate_other">

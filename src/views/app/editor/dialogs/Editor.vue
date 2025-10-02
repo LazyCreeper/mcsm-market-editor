@@ -66,26 +66,26 @@ const props = defineProps<{
   formData = ref<QuickStartPackages>(),
   isDockerMode = computed(() => formData.value?.setupInfo?.processType === 'docker'),
   formRules = computed<Partial<Record<keyof QuickStartPackages, any>>>(() => ({
-    title: [{ required: true, message: t('请输入模板名称') }],
-    language: [{ required: true, message: t('请选择语言') }],
-    platform: [{ required: true, message: t('请选择运行平台') }],
-    description: [{ required: true, message: t('请输入模板介绍') }],
-    image: [{ required: true, message: t('请输入封面URL') }],
-    author: [{ required: true, message: t('请输入模板作者') }],
+    title: [{ required: true, message: t('TXT_CODE_6b5509c7') }],
+    language: [{ required: true, message: t('TXT_CODE_60752a40') }],
+    platform: [{ required: true, message: t('TXT_CODE_46039f9b') }],
+    description: [{ required: true, message: t('TXT_CODE_8d6c8ae7') }],
+    image: [{ required: true, message: t('TXT_CODE_c11ac499') }],
+    author: [{ required: true, message: t('TXT_CODE_f6d73056') }],
 
-    gameType: [{ required: true, message: t('请选择一级分类') }],
-    category: [{ required: true, message: t('请选择二级分类') }],
-    runtime: [{ required: true, message: t('请输入环境要求') }],
-    hardware: [{ required: true, message: t('请输入硬件要求') }],
+    gameType: [{ required: true, message: t('TXT_CODE_f0694685') }],
+    category: [{ required: true, message: t('TXT_CODE_b2391fca') }],
+    runtime: [{ required: true, message: t('TXT_CODE_8717ed9d') }],
+    hardware: [{ required: true, message: t('TXT_CODE_f7909939') }],
 
     setupInfo: {
       startCommand: [
         {
           required: true,
           validator: async (_rule: Rule, value: string) => {
-            if (value === '') throw new Error(t('请输入启动命令'))
+            if (value === '') throw new Error(t('TXT_CODE_4e810102'))
             if (value.includes('\n'))
-              throw new Error(t('启动命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+              throw new Error(t('TXT_CODE_bbbda29'))
           },
           trigger: 'change'
         }
@@ -94,9 +94,9 @@ const props = defineProps<{
         {
           required: true,
           validator: async (_rule: Rule, value: string) => {
-            if (value === '') throw new Error(t('请输入停止命令'))
+            if (value === '') throw new Error(t('TXT_CODE_cc732bf6'))
             if (value.includes('\n'))
-              throw new Error(t('停止命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+              throw new Error(t('TXT_CODE_ffeacc21'))
           },
           trigger: 'change'
         }
@@ -105,21 +105,21 @@ const props = defineProps<{
         {
           required: false,
           validator: async (_rule: Rule, value: string) => {
-            if (value === '') throw new Error(t('请输入更新命令'))
+            if (value === '') throw new Error(t('TXT_CODE_83d8e4a1'))
             if (value.includes('\n'))
-              throw new Error(t('更新命令中不可包含换行，这并非脚本文件，不可执行多条命令'))
+              throw new Error(t('TXT_CODE_e9ac4f57'))
           },
           trigger: 'change'
         }
       ],
-      ie: [{ required: true, message: t('请选择输入编码') }],
-      oe: [{ required: true, message: t('请选择输出编码') }],
-      fileCode: [{ required: true, message: t('请选择文件编码') }],
-      type: [{ required: true, message: t('请选择游戏类型') }],
+      ie: [{ required: true, message: t('TXT_CODE_e86e91a2') }],
+      oe: [{ required: true, message: t('TXT_CODE_3bdd7af8') }],
+      fileCode: [{ required: true, message: t('TXT_CODE_c24fdee3') }],
+      type: [{ required: true, message: t('TXT_CODE_9f4eaa41') }],
 
       docker: {
-        image: [{ required: isDockerMode.value, message: t('请输入镜像名称') }],
-        ports: [{ required: isDockerMode.value, message: t('请设置端口映射') }]
+        image: [{ required: isDockerMode.value, message: t('TXT_CODE_9fed23ab') }],
+        ports: [{ required: isDockerMode.value, message: t('TXT_CODE_cd5df11b') }]
       }
     }
   })),
@@ -173,7 +173,7 @@ const props = defineProps<{
       formData.value.language = isCN() ? 'zh_cn' : 'en_us'
       editMode.value = false
     }
-    title.value = editMode.value ? t('编辑模板') : t('新增模板')
+    title.value = editMode.value ? t('TXT_CODE_921206fc') : t('TXT_CODE_3d45d8d')
     index.value = i ?? -1
     status.value = true
   },
@@ -187,7 +187,7 @@ const props = defineProps<{
       loading.value = true
       await formRef.value?.validate()
 
-      message.success(editMode.value ? t('保存成功') : t('创建成功'))
+      message.success(editMode.value ? t('TXT_CODE_a7907771') : t('TXT_CODE_d28c05df'))
       emits('ok', _.cloneDeep(formData.value), index.value)
       cancel()
     } finally {
@@ -246,10 +246,10 @@ defineExpose({
   >
     <a-form v-if="formData" ref="formRef" :model="formData" :rules="formRules" layout="vertical">
       <a-tabs v-model:activeKey="activeKey">
-        <a-tab-pane key="1" :tab="t('模板信息')">
+        <a-tab-pane key="1" :tab="t('TXT_CODE_d9c63fdd')">
           <a-row :gutter="20">
             <a-col :span="24" :sm="24" :md="12">
-              <a-form-item :label="t('封面图')" name="image">
+              <a-form-item :label="t('TXT_CODE_80c5409f')" name="image">
                 <a-image
                   :src="formData.image"
                   fallback="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 0 0'%3E%3Crect  height='330'/%3E%3C/svg%3E"
@@ -258,11 +258,11 @@ defineExpose({
               </a-form-item>
             </a-col>
             <a-col :span="24" :sm="24" :md="12">
-              <a-form-item :label="t('模板名称')" name="title">
+              <a-form-item :label="t('TXT_CODE_f4fba0cd')" name="title">
                 <a-input v-model:value="formData.title" />
               </a-form-item>
 
-              <a-form-item :label="t('介绍')" name="description">
+              <a-form-item :label="t('TXT_CODE_59cdbec3')" name="description">
                 <a-textarea
                   v-model:value="formData.description"
                   allow-clear
@@ -273,15 +273,15 @@ defineExpose({
 
               <a-row :gutter="20">
                 <a-col :span="12">
-                  <a-form-item :label="t('语言')" name="language">
-                    <a-select v-model:value="formData.language" :placeholder="t('请选择语言')">
+                  <a-form-item :label="t('TXT_CODE_2a34c50a')" name="language">
+                    <a-select v-model:value="formData.language" :placeholder="t('TXT_CODE_60752a40')">
                       <a-select-option value="zh_cn">简体中文</a-select-option>
                       <a-select-option value="en_us">English</a-select-option>
                     </a-select>
                   </a-form-item>
                 </a-col>
                 <a-col :span="12">
-                  <a-form-item :label="t('模板作者 / 提供者')" name="author">
+                  <a-form-item :label="t('TXT_CODE_3d56da34')" name="author">
                     <a-input v-model:value="formData.author" />
                   </a-form-item>
                 </a-col>
@@ -291,7 +291,7 @@ defineExpose({
 
           <a-row :gutter="20">
             <a-col :span="6">
-              <a-form-item :label="t('游戏类型')" :name="['setupInfo', 'type']">
+              <a-form-item :label="t('TXT_CODE_c5ace40b')" :name="['setupInfo', 'type']">
                 <a-select
                   v-if="formData.setupInfo"
                   v-model:value="formData.setupInfo.type"
@@ -308,11 +308,11 @@ defineExpose({
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item :label="t('一级分类（游戏名称）')" name="gameType">
+              <a-form-item :label="t('TXT_CODE_ebfb4831')" name="gameType">
                 <a-select
                   v-model:value="formData.gameType"
                   show-search
-                  :placeholder="t('所有游戏')"
+                  :placeholder="t('TXT_CODE_107695d')"
                   :options="
                     selectOptions.appGameTypeList.filter((item) => item.value !== SEARCH_ALL_KEY)
                   "
@@ -334,7 +334,7 @@ defineExpose({
                         <template #icon>
                           <PlusOutlined />
                         </template>
-                        {{ t('添加') }}
+                        {{ t('TXT_CODE_a1d885c1') }}
                       </a-button>
                     </a-space>
                   </template>
@@ -342,11 +342,11 @@ defineExpose({
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item :label="t('运行平台')" name="platform">
+              <a-form-item :label="t('TXT_CODE_1ce1d1d1')" name="platform">
                 <a-select
                   v-model:value="formData.platform"
                   show-search
-                  :placeholder="t('所有系统')"
+                  :placeholder="t('TXT_CODE_47203b64')"
                   :options="selectOptions.appPlatformList"
                 >
                   <template #dropdownRender="{ menuNode: menu }">
@@ -366,7 +366,7 @@ defineExpose({
                         <template #icon>
                           <PlusOutlined />
                         </template>
-                        {{ t('添加') }}
+                        {{ t('TXT_CODE_a1d885c1') }}
                       </a-button>
                     </a-space>
                   </template>
@@ -374,11 +374,11 @@ defineExpose({
               </a-form-item>
             </a-col>
             <a-col :span="6">
-              <a-form-item :label="t('二级分类（版本类型）')" name="category">
+              <a-form-item :label="t('TXT_CODE_2d8a400')" name="category">
                 <a-select
                   v-model:value="formData.category"
                   show-search
-                  :placeholder="t('最新版本')"
+                  :placeholder="t('TXT_CODE_5962e188')"
                   :options="selectOptions.appCategoryList"
                 >
                   <template #dropdownRender="{ menuNode: menu }">
@@ -398,7 +398,7 @@ defineExpose({
                         <template #icon>
                           <PlusOutlined />
                         </template>
-                        {{ t('添加') }}
+                        {{ t('TXT_CODE_a1d885c1') }}
                       </a-button>
                     </a-space>
                   </template>
@@ -409,30 +409,30 @@ defineExpose({
 
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item :label="t('环境需求')" name="runtime">
+              <a-form-item :label="t('TXT_CODE_80c85070')" name="runtime">
                 <a-input v-model:value="formData.runtime" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item :label="t('硬件要求')" name="hardware">
+              <a-form-item :label="t('TXT_CODE_683e3033')" name="hardware">
                 <a-input v-model:value="formData.hardware" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item :label="t('安装包体积（可选）')" name="size">
+              <a-form-item :label="t('TXT_CODE_8dbcf565')" name="size">
                 <a-input v-model:value="formData.size" />
               </a-form-item>
             </a-col>
           </a-row>
 
-          <a-form-item :label="t('安装包下载地址（可选）')" name="targetLink">
+          <a-form-item :label="t('TXT_CODE_13eac7e1')" name="targetLink">
             <a-input
               v-model:value="formData.targetLink"
-              :placeholder="t('仅支持游戏官方下载地址及 ZIP 格式文件')"
+              :placeholder="t('TXT_CODE_8d83752')"
             />
           </a-form-item>
 
-          <a-form-item :label="t('标签（可选）')" name="tags">
+          <a-form-item :label="t('TXT_CODE_9901af98')" name="tags">
             <a-select
               v-model:value="formData.tags"
               mode="tags"
@@ -440,60 +440,60 @@ defineExpose({
             ></a-select>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane v-if="formData.setupInfo" key="2" :tab="t('服务器配置与运行信息')" force-render>
-          <a-form-item :label="t('启动命令（不要换行）')" :name="['setupInfo', 'startCommand']">
+        <a-tab-pane v-if="formData.setupInfo" key="2" :tab="t('TXT_CODE_ef5f0c4c')" force-render>
+          <a-form-item :label="t('TXT_CODE_7fa8720d')" :name="['setupInfo', 'startCommand']">
             <a-textarea
               v-model:value="formData.setupInfo.startCommand"
               allow-clear
               size="large"
               :auto-size="{ minRows: 1 }"
-              :placeholder="t('留空则使用容器自带的入口程序（EntryPoint）')"
+              :placeholder="t('TXT_CODE_f1cae9fa')"
             />
           </a-form-item>
           <a-row :gutter="20">
             <a-col :span="12">
-              <a-form-item :label="t('停止命令')" :name="['setupInfo', 'stopCommand']">
+              <a-form-item :label="t('TXT_CODE_53dd82fc')" :name="['setupInfo', 'stopCommand']">
                 <a-textarea
                   v-model:value="formData.setupInfo.stopCommand"
                   allow-clear
                   size="large"
                   :auto-size="{ minRows: 1 }"
-                  :placeholder="t('点击“关闭”按钮时执行的命令')"
+                  :placeholder="t('TXT_CODE_6c0478ab')"
                 />
               </a-form-item>
             </a-col>
             <a-col :span="12">
-              <a-form-item :label="t('更新命令（可选）')" :name="['setupInfo', 'updateCommand']">
+              <a-form-item :label="t('TXT_CODE_61834192')" :name="['setupInfo', 'updateCommand']">
                 <a-textarea
                   v-model:value="formData.setupInfo.updateCommand"
                   allow-clear
                   size="large"
                   :auto-size="{ minRows: 1 }"
-                  :placeholder="t('点击“更新”按钮时执行的命令')"
+                  :placeholder="t('TXT_CODE_57674047')"
                 />
               </a-form-item>
             </a-col>
           </a-row>
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item :label="t('输入编码格式')" :name="['setupInfo', 'ie']">
-                <a-select v-model:value="formData.setupInfo.ie" :placeholder="t('请选择')">
+              <a-form-item :label="t('TXT_CODE_5ce5085c')" :name="['setupInfo', 'ie']">
+                <a-select v-model:value="formData.setupInfo.ie" :placeholder="t('TXT_CODE_3bb646e4')">
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item :label="t('输出编码格式')" :name="['setupInfo', 'oe']">
-                <a-select v-model:value="formData.setupInfo.oe" :placeholder="t('请选择')">
+              <a-form-item :label="t('TXT_CODE_2efcbf1e')" :name="['setupInfo', 'oe']">
+                <a-select v-model:value="formData.setupInfo.oe" :placeholder="t('TXT_CODE_3bb646e4')">
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item :label="t('文件编码格式')" :name="['setupInfo', 'fileCode']">
-                <a-select v-model:value="formData.setupInfo.fileCode" :placeholder="t('请选择')">
+              <a-form-item :label="t('TXT_CODE_6f161560')" :name="['setupInfo', 'fileCode']">
+                <a-select v-model:value="formData.setupInfo.fileCode" :placeholder="t('TXT_CODE_3bb646e4')">
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
@@ -501,7 +501,7 @@ defineExpose({
             </a-col>
           </a-row>
 
-          <a-form-item :label="t('附加标签（可选）')" :name="['setupInfo', 'tag']">
+          <a-form-item :label="t('TXT_CODE_45e8f121')" :name="['setupInfo', 'tag']">
             <a-select
               v-model:value="formData.setupInfo.tag"
               mode="tags"
@@ -509,10 +509,10 @@ defineExpose({
             ></a-select>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane v-if="formData.setupInfo?.docker" key="3" :tab="t('Docker 配置')" force-render>
+        <a-tab-pane v-if="formData.setupInfo?.docker" key="3" :tab="t('TXT_CODE_645da993')" force-render>
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item :label="t('启用 Docker 容器')" :name="['setupInfo', 'processType']">
+              <a-form-item :label="t('TXT_CODE_61a8296e')" :name="['setupInfo', 'processType']">
                 <a-switch
                   v-model:checked="formData.setupInfo.processType"
                   checked-value="docker"
@@ -522,11 +522,11 @@ defineExpose({
               </a-form-item>
             </a-col>
             <a-col :span="16">
-              <a-form-item :label="t('镜像名称')" :name="['setupInfo', 'docker', 'image']">
+              <a-form-item :label="t('TXT_CODE_438aa1')" :name="['setupInfo', 'docker', 'image']">
                 <a-input
                   v-model:value="formData.setupInfo.docker.image"
                   :disabled="!isDockerMode"
-                  :placeholder="t('格式为“镜像名:标签”，latest 表示最新版本')"
+                  :placeholder="t('TXT_CODE_ef79a2ff')"
                 />
               </a-form-item>
             </a-col>
@@ -535,7 +535,7 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="18">
               <a-form-item
-                :label="t('容器内工作目录')"
+                :label="t('TXT_CODE_b1446a00')"
                 :name="['setupInfo', 'docker', 'workingDir']"
               >
                 <a-input
@@ -546,7 +546,7 @@ defineExpose({
             </a-col>
             <a-col :span="6">
               <a-form-item
-                :label="t('强制切换到工作目录')"
+                :label="t('TXT_CODE_6a06a9ef')"
                 :name="['setupInfo', 'docker', 'changeWorkdir']"
               >
                 <a-switch
@@ -559,7 +559,7 @@ defineExpose({
 
           <a-row :gutter="20">
             <a-col :span="8">
-              <a-form-item :label="t('端口映射')" :name="['setupInfo', 'docker', 'ports']">
+              <a-form-item :label="t('TXT_CODE_8c17acf8')" :name="['setupInfo', 'docker', 'ports']">
                 <a-input-group compact style="display: flex">
                   <a-input
                     v-model:value="formData.setupInfo.docker.ports"
@@ -572,14 +572,14 @@ defineExpose({
                     :disabled="!isDockerMode"
                     @click="handleEditDockerConfig('port')"
                   >
-                    {{ t('编辑') }}
+                    {{ t('TXT_CODE_ad207008') }}
                   </a-button>
                 </a-input-group>
               </a-form-item>
             </a-col>
             <a-col :span="8">
               <a-form-item
-                :label="t('额外挂载目录（可选）')"
+                :label="t('TXT_CODE_55015f30')"
                 :name="['setupInfo', 'docker', 'extraVolumes']"
               >
                 <a-input-group compact style="display: flex">
@@ -593,13 +593,13 @@ defineExpose({
                     :disabled="!isDockerMode"
                     @click="handleEditDockerConfig('volume')"
                   >
-                    {{ t('编辑') }}
+                    {{ t('TXT_CODE_ad207008') }}
                   </a-button>
                 </a-input-group>
               </a-form-item>
             </a-col>
             <a-col :span="8">
-              <a-form-item :label="t('环境变量（可选）')" :name="['setupInfo', 'docker', 'env']">
+              <a-form-item :label="t('TXT_CODE_18e7e5df')" :name="['setupInfo', 'docker', 'env']">
                 <a-input-group compact style="display: flex">
                   <a-input
                     v-model:value="formData.setupInfo.docker.env"
@@ -611,7 +611,7 @@ defineExpose({
                     :disabled="!isDockerMode"
                     @click="handleEditDockerConfig('env')"
                   >
-                    {{ t('编辑') }}
+                    {{ t('TXT_CODE_ad207008') }}
                   </a-button>
                 </a-input-group>
               </a-form-item>
