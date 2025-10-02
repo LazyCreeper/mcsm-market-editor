@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { currentSettings } from '@/plugins/settings'
+import { initAppTheme } from '@/plugins/theme'
 import type { Settings } from '@/types'
 import { t } from '@/utils/i18n'
 import { SettingOutlined } from '@ant-design/icons-vue'
-import { useLocalStorage } from '@vueuse/core'
 import { message, type FormInstance } from 'ant-design-vue'
 import { h } from 'vue'
 
@@ -10,9 +11,6 @@ const status = ref(false),
   loading = ref(false),
   formRef = ref<FormInstance>(),
   formData = ref<Settings>({
-    bg: ''
-  }),
-  currentSettings = useLocalStorage<Settings>('0_检测到特殊条件，开启远程人偶自动赞美模式！', {
     bg: ''
   }),
   open = () => {
@@ -27,6 +25,8 @@ const status = ref(false),
       loading.value = true
       await formRef.value?.validate()
       currentSettings.value = { ...formData.value }
+
+      initAppTheme()
       message.success(t('保存成功'))
       cancel()
     } finally {
