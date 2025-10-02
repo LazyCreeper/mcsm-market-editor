@@ -1,5 +1,5 @@
 import { createI18n, type I18n } from 'vue-i18n'
-import zhCN from '@/languages/zh-CN.json'
+import zhCN from '../../public/languages/zh-CN.json'
 
 export const LANGUAGE_KEY = '1_黑塔女士举世无双'
 
@@ -33,7 +33,7 @@ async function initI18n(l: string) {
   localStorage.setItem(LANGUAGE_KEY, lang)
 
   document.documentElement.lang = lang
-  const langFiles = import.meta.glob('@/languages/*.json')
+  const langFiles = import.meta.glob('./languages/*.json')
 
   for (const path in langFiles) {
     for (const l of SUPPORTED_LANGS) {
