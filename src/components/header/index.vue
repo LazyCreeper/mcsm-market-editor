@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { h } from 'vue'
 import router from '@/router'
 import ThemeToggle from './ThemeToggle.vue'
-// import { indexStore } from '@/stores'
 import { useScroll } from '@vueuse/core'
 import { isPhone } from '@/hooks/useResponsive'
 import logo from '@/assets/logo.png'
 import LangToggle from './LangToggle.vue'
 import { t } from '@/utils/i18n'
+import { GithubOutlined } from '@ant-design/icons-vue'
 
 // const props = defineProps<{
 //   collapsed: {
@@ -76,6 +77,14 @@ const menus = computed(() => {
       </nav>
 
       <div class="btns gap-[4px]">
+        <a-button
+          class="btn-has-icon"
+          type="text"
+          style="color: var(--app-header-text-color) !important"
+          :icon="h(GithubOutlined)"
+          href="https://github.com/LazyCreeper/mcsm-market-editor"
+          target="_blank"
+        />
         <ThemeToggle />
         <LangToggle />
       </div>
