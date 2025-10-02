@@ -7,7 +7,7 @@ import { HomeOutlined } from '@ant-design/icons-vue'
   <div class="mx-auto w-1/2 text-center">
     <img alt="404 Not Found" title="404 Not Found" :src="err404" />
     <a-button class="btn-has-icon" href="/" type="primary" size="large">
-      {{ t('返回首页') }}
+      {{ t('TXT_CODE_70e0cf4d') }}
       <HomeOutlined />
     </a-button>
   </div>
