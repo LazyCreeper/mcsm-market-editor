@@ -76,7 +76,7 @@ const router = createRouter({
           name: t('仪表板'),
           component: () => import('@/views/app/dashboard/index.vue'),
           meta: {
-            mainMenu: true
+            mainMenu: false
           }
         },
 
@@ -85,7 +85,7 @@ const router = createRouter({
           name: t('编辑器'),
           component: () => import('@/views/app/editor/index.vue'),
           meta: {
-            mainMenu: true
+            mainMenu: false
           }
         }
       ]

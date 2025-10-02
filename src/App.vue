@@ -49,9 +49,9 @@ onMounted(() => {
   />
   <ConfigProvider :locale="zhCN" :theme>
     <a-layout class="transition-all duration-300">
-      <a-layout-content disabled class="global-app-container">
-        <AppHeader />
+      <AppHeader />
 
+      <a-layout-content disabled class="global-app-container">
         <RouterView v-slot="{ Component }">
           <Transition name="fade" mode="out-in">
             <a-spin
@@ -71,7 +71,7 @@ onMounted(() => {
         </RouterView>
 
         <div class="pt-16"></div>
-        <Footer class="fixed right-0 bottom-0 left-0" />
+        <Footer />
       </a-layout-content>
     </a-layout>
   </ConfigProvider>
