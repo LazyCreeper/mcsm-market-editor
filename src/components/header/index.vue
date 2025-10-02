@@ -8,6 +8,7 @@ import logo from '@/assets/logo.png'
 import LangToggle from './LangToggle.vue'
 import { t } from '@/utils/i18n'
 import { GithubOutlined } from '@ant-design/icons-vue'
+import Settings from './Settings.vue'
 
 // const props = defineProps<{
 //   collapsed: {
@@ -87,6 +88,7 @@ const menus = computed(() => {
         />
         <ThemeToggle />
         <LangToggle />
+        <Settings />
       </div>
     </div>
   </header>

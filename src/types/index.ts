@@ -66,3 +66,7 @@ export interface MountComponent {
   destroyComponent(delay?: number): void
   emitResult(data?: any): void
 }
+
+export interface Settings {
+  bg: string
+}

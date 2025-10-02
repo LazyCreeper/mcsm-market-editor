@@ -44,6 +44,7 @@ declare module 'vue' {
     LangToggle: typeof import('./src/components/header/LangToggle.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Settings: typeof import('./src/components/header/Settings.vue')['default']
     ThemeToggle: typeof import('./src/components/header/ThemeToggle.vue')['default']
   }
 }

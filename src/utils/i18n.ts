@@ -1,7 +1,7 @@
 import { createI18n, type I18n } from 'vue-i18n'
 import zhCN from '@/languages/zh-CN.json'
 
-export const LANGUAGE_KEY = '黑塔女士举世无双'
+export const LANGUAGE_KEY = '1_黑塔女士举世无双'
 
 // DO NOT I18N
 // If you want to add the language of your own country, you need to add the code here.
@@ -28,8 +28,9 @@ const messages: Record<string, any> = {
   'zh-CN': zhCN
 }
 async function initI18n(l: string) {
-  if (i18n) return console.log(i18n)
+  if (i18n) return
   const lang = toStandardLang(l)
+  localStorage.setItem(LANGUAGE_KEY, lang)
 
   document.documentElement.lang = lang
   const langFiles = import.meta.glob('@/languages/*.json')

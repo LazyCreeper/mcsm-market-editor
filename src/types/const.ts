@@ -1,1 +1,1 @@
-export const THEME_KEY = '黑塔女士聪明绝顶'
+export const THEME_KEY = '2_黑塔女士聪明绝顶'

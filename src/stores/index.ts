@@ -1,7 +1,7 @@
 import { createGlobalState, useStorage } from '@vueuse/core'
 
 export const indexStore = createGlobalState(() => {
-  const token = useStorage<string>('黑塔女士沉鱼落雁', '')
+  const token = useStorage<string>('3_黑塔女士沉鱼落雁', '')
 
   const isLogin = computed(() => token.value)
 
