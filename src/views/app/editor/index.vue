@@ -220,8 +220,6 @@ const handlePlatformChange = () => {
   searchForm.category = SEARCH_ALL_KEY
 }
 
-const checkRaw = () => window.open(url.value)
-
 const downloadMarketJson = () => {
   if (!appList.value) return message.warning(t('暂无数据可下载'))
   const dataStr = JSON.stringify(appList.value, null, 2)
@@ -242,6 +240,7 @@ const findFn = (pkg: QuickStartPackages, item: QuickStartPackages) =>
   pkg.title === item.title &&
   pkg.gameType === item.gameType &&
   pkg.language === item.language &&
+  pkg.platform === item.platform &&
   pkg.category === item.category
 const editorRef = ref<InstanceType<typeof Editor>>()
 const toEdit = (item: QuickStartPackages) => {
@@ -298,6 +297,17 @@ const selectAllItems = () => {
 const exitMultipleMode = () => {
   multipleMode.value = false
   selectedItems.value = []
+}
+
+const batchDelete = () => {
+  if (selectedItems.value.length === 0) return message.warning(t('请选择要删除的项'))
+  for (const item of selectedItems.value) {
+    const index = appList.value?.packages.findIndex((pkg) => findFn(pkg, item))
+    if (Number(index) < 0) continue
+    appList.value?.packages.splice(Number(index), 1)
+  }
+  selectedItems.value = []
+  message.success(t('删除成功'))
 }
 
 onMounted(() => {
@@ -358,6 +368,10 @@ onMounted(() => {
     <div class="flex flex-wrap gap-4">
       <template v-if="multipleMode">
         <a-form-item class="mb-0">
+          <div class="p-[8px]">{{ t('已选择') }}: {{ selectedItems.length }} {{ t('项') }}</div>
+        </a-form-item>
+
+        <a-form-item class="mb-0">
           <a-button class="btn-has-icon" type="default" size="large" @click="exitMultipleMode">
             {{ t('退出批量操作') }}
           </a-button>
@@ -376,7 +390,7 @@ onMounted(() => {
                   {
                     title: t('删除'),
                     icon: DeleteOutlined,
-                    click: () => {}
+                    click: batchDelete
                   }
                 ]"
                 :key="item.title"
