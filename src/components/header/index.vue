@@ -54,9 +54,9 @@ const menus = computed(() => {
 
 <template>
   <header class="app-header-wrapper" :style="headerStyle">
-    <div v-if="!isPhone" class="app-header-content">
+    <div class="app-header-content">
       <nav class="btns">
-        <a href="." class="mr-[12px] h-[18px]">
+        <a href="/" class="mr-[12px] h-[18px]">
           <img class="logo h-[18px]" :src="logo" />
         </a>
 
@@ -91,7 +91,7 @@ const menus = computed(() => {
     </div>
   </header>
 
-  <div v-if="!isPhone" style="height: 64px"></div>
+  <div style="height: 64px"></div>
 
   <!-- TODO: 手机端按钮 -->
 </template>
