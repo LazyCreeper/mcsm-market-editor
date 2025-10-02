@@ -112,7 +112,7 @@ const router = createRouter({
 const { isLogin, progressLinear } = indexStore()
 let timer: ReturnType<typeof setTimeout>
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   if (timer) clearInterval(timer)
   progressLinear.value.color.current = progressLinear.value.color.default
   progressLinear.value.num += Math.floor(Math.random() * 6) + 1

@@ -1,5 +1,5 @@
 import { useLocalStorage, usePreferredDark } from '@vueuse/core'
-import { AppTheme, type Settings } from '@/types'
+import { AppTheme } from '@/types'
 import { THEME_KEY } from '@/types/const'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import { Card, theme as antTheme } from 'ant-design-vue'
@@ -77,9 +77,6 @@ export const setBackgroundImage = (url: string) => {
 }
 
 export const setBackground = (url: string) => {
-  console.log('url: ', url)
-  console.log('isUrl: ', !url)
-
   const body = document.querySelector('body')
   if (body) {
     if (!url) return removeBackground()
