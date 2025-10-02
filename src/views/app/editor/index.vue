@@ -324,14 +324,13 @@ onMounted(() => {
   </a-typography-title>
   <a-typography-paragraph>
     <div>
-      <p>
-        {{
-          t(
-            '点击“查看”即可查看当前分类下的所有模板，点击“安装”即可编辑模板信息，点击“批量编辑”进行删除操作。本页面 UI 已同步 MCSM 面板，所见即所得。'
-          )
-        }}
-      </p>
+      {{
+        t(
+          '点击“查看”即可查看当前分类下的所有模板，点击“安装”即可编辑模板信息，点击“批量编辑”进行删除操作。'
+        )
+      }}
     </div>
+    <div class="opacity-70">*{{ t('开发中页面，可能是最终品质 ԅ(¯﹃¯ԅ)') }}</div>
   </a-typography-paragraph>
   <a-form layout="horizontal" :model="searchForm" class="flex flex-wrap justify-between">
     <div class="flex flex-wrap gap-4">
