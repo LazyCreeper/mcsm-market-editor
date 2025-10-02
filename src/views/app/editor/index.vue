@@ -288,6 +288,7 @@ const selectAllItems = () => {
     selectedItems.value = []
   } else {
     for (const item of dynamicList.value) {
+      if (item.isSummary) continue
       if (findItem(item)) continue
       selectedItems.value.push(item)
     }
