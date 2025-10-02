@@ -164,7 +164,7 @@ router.onError((error) => {
     clearInterval(timer)
   }, 500)
   notification.error({
-    message: '路由错误',
+    message: 'Route Error',
     description: error.message
   })
   console.error('Router Err:', error)
