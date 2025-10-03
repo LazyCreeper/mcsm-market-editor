@@ -1,3 +1,4 @@
+import type { QuickStartTemplate } from '@/types'
 import { createGlobalState, useStorage } from '@vueuse/core'
 
 export const indexStore = createGlobalState(() => {
@@ -14,9 +15,12 @@ export const indexStore = createGlobalState(() => {
     }
   })
 
+  const userUploadData = ref<QuickStartTemplate>()
+
   return {
     token,
     isLogin,
-    progressLinear
+    progressLinear,
+    userUploadData
   }
 })

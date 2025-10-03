@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { t } from '@/utils/i18n'
-import { QuestionCircleOutlined, SlackOutlined } from '@ant-design/icons-vue'
-import { message } from 'ant-design-vue'
+import { QuestionCircleOutlined, SlackOutlined, InboxOutlined } from '@ant-design/icons-vue'
+import { message, type UploadProps } from 'ant-design-vue'
 import router from '@/router'
 import { md } from '@/hooks/useResponsive'
+import { indexStore } from '@/stores'
+
+const { userUploadData } = indexStore()
 const templateUrl = ref('https://script.mcsmanager.com/market.json')
 
 const handleSubmit = () => {
@@ -16,10 +19,39 @@ const handleSubmit = () => {
     }
   })
 }
+
+const fileList = ref<any>([])
+const beforeUpload: UploadProps['beforeUpload'] = (file) => {
+  const reader = new FileReader()
+
+  reader.onload = (e: ProgressEvent<FileReader>) => {
+    if (!e.target || !e.target.result) return message.error(t('文件读取失败'))
+    if (typeof e.target.result !== 'string')
+      return message.error(t('文件解析失败，请确保是有效的JSON文件'))
+    const fileContent = e.target.result
+    try {
+      const jsonData = JSON.parse(fileContent)
+      userUploadData.value = jsonData
+      router.push({
+        path: '/app/editor',
+        query: {
+          userUpload: 'true'
+        }
+      })
+    } catch {
+      message.error(t('文件解析失败，请确保是有效的JSON文件'))
+    }
+  }
+  reader.onerror = () => message.error(t('文件读取失败'))
+  reader.readAsText(file)
+  return false
+}
 </script>
 
 <template>
-  <a-row class="h-[calc(100svh-180px)]" align="middle" justify="center">
+  <!-- class="h-[calc(100svh-180px)]" -->
+
+  <a-row class="py-16" align="middle" justify="center">
     <a-col :span="24" :lg="16">
       <div class="text-center">
         <h1 class="text-[2.5rem] font-medium sm:text-[4rem] lg:text-[5rem]">
@@ -69,4 +101,21 @@ const handleSubmit = () => {
       </div>
     </a-col>
   </a-row>
+
+  <a-upload-dragger
+    v-model:fileList="fileList"
+    accept=".json"
+    :maxCount="1"
+    :before-upload="beforeUpload"
+    :showUploadList="false"
+  >
+    <p class="ant-upload-drag-icon">
+      <inbox-outlined></inbox-outlined>
+    </p>
+    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
+  </a-upload-dragger>
 </template>

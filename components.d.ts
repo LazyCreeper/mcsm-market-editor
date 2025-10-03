@@ -37,6 +37,7 @@ declare module 'vue' {
     ATypographyParagraph: typeof import('ant-design-vue/es')['TypographyParagraph']
     ATypographyText: typeof import('ant-design-vue/es')['TypographyText']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
+    AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
     CardPanel: typeof import('./src/components/CardPanel.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/header/index.vue')['default']

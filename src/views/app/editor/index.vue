@@ -19,8 +19,11 @@ import { message } from 'ant-design-vue'
 import { toCopy } from '@/utils'
 import Editor from './dialogs/Editor.vue'
 import _ from 'lodash'
+import { indexStore } from '@/stores'
 
 const url = useRouteQuery('url', '', { transform: String })
+const isUserUpload = useRouteQuery('userUpload', '', { transform: Boolean })
+const { userUploadData } = indexStore()
 const appList = ref<QuickStartTemplate>()
 const appListLoading = ref(false)
 const fetchTemplate = async () => {
@@ -312,7 +315,11 @@ const batchDelete = () => {
 }
 
 onMounted(() => {
-  fetchTemplate()
+  if (isUserUpload.value) {
+    appList.value = userUploadData.value
+  } else {
+    fetchTemplate()
+  }
 })
 </script>
 
@@ -324,11 +331,7 @@ onMounted(() => {
   </a-typography-title>
   <a-typography-paragraph>
     <div>
-      {{
-        t(
-          'TXT_CODE_372e7b9c'
-        )
-      }}
+      {{ t('TXT_CODE_372e7b9c') }}
     </div>
     <div class="opacity-70">*{{ t('TXT_CODE_24821a7e') }}</div>
   </a-typography-paragraph>
@@ -368,7 +371,9 @@ onMounted(() => {
     <div class="flex flex-wrap gap-4">
       <template v-if="multipleMode">
         <a-form-item class="mb-0">
-          <div class="p-[8px]">{{ t('TXT_CODE_379fa48a') }}: {{ selectedItems.length }} {{ t('TXT_CODE_5cd3b4bd') }}</div>
+          <div class="p-[8px]">
+            {{ t('TXT_CODE_379fa48a') }}: {{ selectedItems.length }} {{ t('TXT_CODE_5cd3b4bd') }}
+          </div>
         </a-form-item>
 
         <a-form-item class="mb-0">
@@ -379,7 +384,11 @@ onMounted(() => {
 
         <a-form-item class="mb-0">
           <a-button class="btn-has-icon" type="default" size="large" @click="selectAllItems">
-            {{ dynamicList.length === selectedItems.length ? t('TXT_CODE_df87c46d') : t('TXT_CODE_f466d7a') }}
+            {{
+              dynamicList.length === selectedItems.length
+                ? t('TXT_CODE_df87c46d')
+                : t('TXT_CODE_f466d7a')
+            }}
           </a-button>
         </a-form-item>
         <a-dropdown>
@@ -429,9 +438,7 @@ onMounted(() => {
   <a-typography-paragraph>
     <div>
       <p>
-        <span>{{
-          t('TXT_CODE_c9ce7427')
-        }}</span>
+        <span>{{ t('TXT_CODE_c9ce7427') }}</span>
         <!-- <span v-if="onlyDockerTemplate">
           <br />
           {{ t("TXT_CODE_de9b7cc0") }}
@@ -625,7 +632,13 @@ onMounted(() => {
                     <SelectOutlined v-if="multipleMode" />
                     <DownloadOutlined v-else />
                   </template>
-                  {{ multipleMode ? (findItem(item) ? t('TXT_CODE_abedfd03') : t('TXT_CODE_7b2c5414')) : t('TXT_CODE_1704ea49') }}
+                  {{
+                    multipleMode
+                      ? findItem(item)
+                        ? t('TXT_CODE_abedfd03')
+                        : t('TXT_CODE_7b2c5414')
+                      : t('TXT_CODE_1704ea49')
+                  }}
                 </a-button>
 
                 <a-button
