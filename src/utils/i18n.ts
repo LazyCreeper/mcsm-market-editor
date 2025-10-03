@@ -33,7 +33,7 @@ async function initI18n(l: string) {
   localStorage.setItem(LANGUAGE_KEY, lang)
 
   document.documentElement.lang = lang
-  const langFiles = import.meta.glob('./languages/*.json')
+  const langFiles = import.meta.glob('../../public/languages/*.json')
 
   for (const path in langFiles) {
     for (const l of SUPPORTED_LANGS) {
