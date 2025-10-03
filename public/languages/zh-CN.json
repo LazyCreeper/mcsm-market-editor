@@ -137,5 +137,9 @@
   "TXT_CODE_ac10fe01": "请输入模板地址",
   "TXT_CODE_1f190ead": "适用于 MCSManager {0} 的应用市场模板编辑器",
   "TXT_CODE_5ead1240": "开始编辑",
-  "TXT_CODE_70e0cf4d": "返回首页"
+  "TXT_CODE_70e0cf4d": "返回首页",
+  "TXT_CODE_a62886b9": "文件读取失败",
+  "TXT_CODE_bddc37e2": "文件解析失败，请确保是有效的JSON文件",
+  "TXT_CODE_8e16ee21": "点击上传模板文件",
+  "TXT_CODE_e1c60611": "仅限 JSON 格式"
 }

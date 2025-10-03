@@ -137,5 +137,10 @@
   "TXT_CODE_ac10fe01": "Please enter the template URL",
   "TXT_CODE_1f190ead": "Application Market Template Editor for MCSManager {0}",
   "TXT_CODE_5ead1240": "Start Editing",
-  "TXT_CODE_70e0cf4d": "Back to Home"
+  "TXT_CODE_70e0cf4d": "Back to Home",
+  "TXT_CODE_a62886b9": "File read failed",
+  "TXT_CODE_bddc37e2": "File parsing failed, please ensure it is a valid JSON file",
+  "TXT_CODE_8e16ee21": "Click to upload template file",
+  "TXT_CODE_e1c60611": "JSON format only"
 }
+

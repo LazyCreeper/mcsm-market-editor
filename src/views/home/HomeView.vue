@@ -25,9 +25,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
   const reader = new FileReader()
 
   reader.onload = (e: ProgressEvent<FileReader>) => {
-    if (!e.target || !e.target.result) return message.error(t('文件读取失败'))
+    if (!e.target || !e.target.result) return message.error(t('TXT_CODE_a62886b9'))
     if (typeof e.target.result !== 'string')
-      return message.error(t('文件解析失败，请确保是有效的JSON文件'))
+      return message.error(t('TXT_CODE_bddc37e2'))
     const fileContent = e.target.result
     try {
       const jsonData = JSON.parse(fileContent)
@@ -39,10 +39,10 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
         }
       })
     } catch {
-      message.error(t('文件解析失败，请确保是有效的JSON文件'))
+      message.error(t('TXT_CODE_bddc37e2'))
     }
   }
-  reader.onerror = () => message.error(t('文件读取失败'))
+  reader.onerror = () => message.error(t('TXT_CODE_a62886b9'))
   reader.readAsText(file)
   return false
 }
@@ -90,6 +90,23 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
             </a-col>
           </a-row>
         </a-form>
+
+        <a-upload-dragger
+          v-model:fileList="fileList"
+          class="m-auto max-w-[50svw]"
+          accept=".json"
+          :maxCount="1"
+          :before-upload="beforeUpload"
+          :showUploadList="false"
+        >
+          <p class="ant-upload-drag-icon">
+            <inbox-outlined></inbox-outlined>
+          </p>
+          <p class="ant-upload-text">{{ t('TXT_CODE_8e16ee21') }}</p>
+          <p class="ant-upload-hint">
+            {{ t('TXT_CODE_e1c60611') }}
+          </p>
+        </a-upload-dragger>
       </div>
     </a-col>
     <a-col v-if="!md" :span="24" :lg="8">
@@ -101,21 +118,4 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
       </div>
     </a-col>
   </a-row>
-
-  <a-upload-dragger
-    v-model:fileList="fileList"
-    accept=".json"
-    :maxCount="1"
-    :before-upload="beforeUpload"
-    :showUploadList="false"
-  >
-    <p class="ant-upload-drag-icon">
-      <inbox-outlined></inbox-outlined>
-    </p>
-    <p class="ant-upload-text">Click or drag file to this area to upload</p>
-    <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </a-upload-dragger>
 </template>
