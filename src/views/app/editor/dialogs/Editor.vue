@@ -259,7 +259,7 @@ defineExpose({
               <a-form-item :label="t('TXT_CODE_59cdbec3')" name="description">
                 <a-textarea
                   v-model:value="formData.description"
-                  :placeholder="t('建议不要超过 3 行')"
+                  :placeholder="t('TXT_CODE_98dbd049')"
                   allow-clear
                   size="large"
                   :auto-size="{ minRows: 1 }"

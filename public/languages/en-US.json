@@ -142,6 +142,7 @@
   "TXT_CODE_bddc37e2": "File parsing failed, please ensure it is a valid JSON file",
   "TXT_CODE_8e16ee21": "Click to upload template file",
   "TXT_CODE_e1c60611": "JSON format only",
-  "TXT_CODE_595efd06": "Create New"
+  "TXT_CODE_595efd06": "Create New",
+  "TXT_CODE_98dbd049": "Suggest not to exceed 3 lines"
 }
 
