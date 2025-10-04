@@ -141,5 +141,6 @@
   "TXT_CODE_a62886b9": "文件读取失败",
   "TXT_CODE_bddc37e2": "文件解析失败，请确保是有效的JSON文件",
   "TXT_CODE_8e16ee21": "点击上传模板文件",
-  "TXT_CODE_e1c60611": "仅限 JSON 格式"
+  "TXT_CODE_e1c60611": "仅限 JSON 格式",
+  "TXT_CODE_595efd06": "创建新模板"
 }

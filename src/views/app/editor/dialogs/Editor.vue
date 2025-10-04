@@ -43,7 +43,7 @@ const props = defineProps<{
       ie: 'UTF-8',
       oe: 'UTF-8',
       type: '',
-      tag: [''],
+      tag: [],
       fileCode: 'UTF-8',
       processType: '',
       updateCommand: '',

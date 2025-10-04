@@ -23,6 +23,7 @@ import { indexStore } from '@/stores'
 
 const url = useRouteQuery('url', '', { transform: String })
 const isUserUpload = useRouteQuery('userUpload', '', { transform: Boolean })
+const isNewTemplate = useRouteQuery('newTemplate', '', { transform: Boolean })
 const { userUploadData } = indexStore()
 const appList = ref<QuickStartTemplate>()
 const appListLoading = ref(false)
@@ -317,6 +318,20 @@ const batchDelete = () => {
 onMounted(() => {
   if (isUserUpload.value) {
     appList.value = userUploadData.value
+  } else if (isNewTemplate.value) {
+    appList.value = {
+      packages: [],
+      languages: [
+        {
+          label: '简体中文',
+          value: 'zh_cn'
+        },
+        {
+          label: 'English',
+          value: 'en_us'
+        }
+      ]
+    }
   } else {
     fetchTemplate()
   }
