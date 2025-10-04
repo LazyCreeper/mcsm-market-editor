@@ -9,6 +9,7 @@ import { dockerPortsArray } from '@/utils'
 import { useDockerEnvEditDialog, usePortEditDialog, useVolumeEditDialog } from '@/components/fc'
 import type { Rule } from 'ant-design-vue/es/form'
 import { INSTANCE_TYPE_TRANSLATION, TERMINAL_CODE } from '@/types/instance'
+import imgFallback from '@/assets/img-fallback.png'
 
 interface FilterOption {
   label: string
@@ -81,9 +82,9 @@ const props = defineProps<{
     setupInfo: {
       startCommand: [
         {
-          required: true,
+          required: false,
           validator: async (_rule: Rule, value: string) => {
-            if (value === '') throw new Error(t('TXT_CODE_4e810102'))
+            // if (value === '') throw new Error(t('TXT_CODE_4e810102'))
             if (value.includes('\n')) throw new Error(t('TXT_CODE_bbbda29'))
           },
           trigger: 'change'
@@ -246,10 +247,7 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="24" :sm="24" :md="12">
               <a-form-item :label="t('TXT_CODE_80c5409f')" name="image">
-                <a-image
-                  :src="formData.image"
-                  fallback="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 0 0'%3E%3Crect  height='330'/%3E%3C/svg%3E"
-                />
+                <a-image :src="formData.image" :fallback="imgFallback" />
                 <a-input v-model:value="formData.image" />
               </a-form-item>
             </a-col>
@@ -261,6 +259,7 @@ defineExpose({
               <a-form-item :label="t('TXT_CODE_59cdbec3')" name="description">
                 <a-textarea
                   v-model:value="formData.description"
+                  :placeholder="t('建议不要超过 3 行')"
                   allow-clear
                   size="large"
                   :auto-size="{ minRows: 1 }"
@@ -268,7 +267,7 @@ defineExpose({
               </a-form-item>
 
               <a-row :gutter="20">
-                <a-col :span="12">
+                <a-col :span="24" :lg="12">
                   <a-form-item :label="t('TXT_CODE_2a34c50a')" name="language">
                     <a-select
                       v-model:value="formData.language"
@@ -279,7 +278,7 @@ defineExpose({
                     </a-select>
                   </a-form-item>
                 </a-col>
-                <a-col :span="12">
+                <a-col :span="24" :lg="12">
                   <a-form-item :label="t('TXT_CODE_3d56da34')" name="author">
                     <a-input v-model:value="formData.author" />
                   </a-form-item>
@@ -289,7 +288,7 @@ defineExpose({
           </a-row>
 
           <a-row :gutter="20">
-            <a-col :span="6">
+            <a-col :span="12" :lg="6">
               <a-form-item :label="t('TXT_CODE_c5ace40b')" :name="['setupInfo', 'type']">
                 <a-select
                   v-if="formData.setupInfo"
@@ -306,7 +305,7 @@ defineExpose({
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="12" :lg="6">
               <a-form-item :label="t('TXT_CODE_ebfb4831')" name="gameType">
                 <a-select
                   v-model:value="formData.gameType"
@@ -340,7 +339,7 @@ defineExpose({
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="12" :lg="6">
               <a-form-item :label="t('TXT_CODE_1ce1d1d1')" name="platform">
                 <a-select
                   v-model:value="formData.platform"
@@ -372,7 +371,7 @@ defineExpose({
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="12" :lg="6">
               <a-form-item :label="t('TXT_CODE_2d8a400')" name="category">
                 <a-select
                   v-model:value="formData.category"
@@ -521,7 +520,7 @@ defineExpose({
           force-render
         >
           <a-row :gutter="20">
-            <a-col :span="8">
+            <a-col :span="12" :sm="10" :md="8" :lg="6">
               <a-form-item :label="t('TXT_CODE_61a8296e')" :name="['setupInfo', 'processType']">
                 <a-switch
                   v-model:checked="formData.setupInfo.processType"
@@ -531,7 +530,7 @@ defineExpose({
                 </a-switch>
               </a-form-item>
             </a-col>
-            <a-col :span="16">
+            <a-col :span="12" :sm="14" :md="16" :lg="18">
               <a-form-item :label="t('TXT_CODE_438aa1')" :name="['setupInfo', 'docker', 'image']">
                 <a-input
                   v-model:value="formData.setupInfo.docker.image"
@@ -543,7 +542,7 @@ defineExpose({
           </a-row>
 
           <a-row :gutter="20">
-            <a-col :span="18">
+            <a-col :span="12" :sm="14" :md="16" :lg="18">
               <a-form-item
                 :label="t('TXT_CODE_b1446a00')"
                 :name="['setupInfo', 'docker', 'workingDir']"
@@ -554,7 +553,7 @@ defineExpose({
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="12" :sm="10" :md="8" :lg="6">
               <a-form-item
                 :label="t('TXT_CODE_6a06a9ef')"
                 :name="['setupInfo', 'docker', 'changeWorkdir']"
@@ -568,13 +567,14 @@ defineExpose({
           </a-row>
 
           <a-row :gutter="20">
-            <a-col :span="8">
+            <a-col :span="12" :lg="8">
               <a-form-item :label="t('TXT_CODE_8c17acf8')" :name="['setupInfo', 'docker', 'ports']">
                 <a-input-group compact style="display: flex">
                   <a-input
                     v-model:value="formData.setupInfo.docker.ports"
                     :disabled="!isDockerMode"
                     placeholder="eg: {mcsm_port1}:25565/udp"
+                    readonly
                   />
                   <a-button
                     type="primary"
@@ -587,7 +587,26 @@ defineExpose({
                 </a-input-group>
               </a-form-item>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="12" :lg="8">
+              <a-form-item :label="t('TXT_CODE_18e7e5df')" :name="['setupInfo', 'docker', 'env']">
+                <a-input-group compact style="display: flex">
+                  <a-input
+                    v-model:value="formData.setupInfo.docker.env"
+                    :disabled="!isDockerMode"
+                    readonly
+                  />
+                  <a-button
+                    type="primary"
+                    size="large"
+                    :disabled="!isDockerMode"
+                    @click="handleEditDockerConfig('env')"
+                  >
+                    {{ t('TXT_CODE_ad207008') }}
+                  </a-button>
+                </a-input-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="24" :lg="8">
               <a-form-item
                 :label="t('TXT_CODE_55015f30')"
                 :name="['setupInfo', 'docker', 'extraVolumes']"
@@ -596,30 +615,13 @@ defineExpose({
                   <a-input
                     v-model:value="formData.setupInfo.docker.extraVolumes"
                     :disabled="!isDockerMode"
+                    readonly
                   />
                   <a-button
                     type="primary"
                     size="large"
                     :disabled="!isDockerMode"
                     @click="handleEditDockerConfig('volume')"
-                  >
-                    {{ t('TXT_CODE_ad207008') }}
-                  </a-button>
-                </a-input-group>
-              </a-form-item>
-            </a-col>
-            <a-col :span="8">
-              <a-form-item :label="t('TXT_CODE_18e7e5df')" :name="['setupInfo', 'docker', 'env']">
-                <a-input-group compact style="display: flex">
-                  <a-input
-                    v-model:value="formData.setupInfo.docker.env"
-                    :disabled="!isDockerMode"
-                  />
-                  <a-button
-                    type="primary"
-                    size="large"
-                    :disabled="!isDockerMode"
-                    @click="handleEditDockerConfig('env')"
                   >
                     {{ t('TXT_CODE_ad207008') }}
                   </a-button>
