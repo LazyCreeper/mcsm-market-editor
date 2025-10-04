@@ -84,8 +84,7 @@ const props = defineProps<{
           required: true,
           validator: async (_rule: Rule, value: string) => {
             if (value === '') throw new Error(t('TXT_CODE_4e810102'))
-            if (value.includes('\n'))
-              throw new Error(t('TXT_CODE_bbbda29'))
+            if (value.includes('\n')) throw new Error(t('TXT_CODE_bbbda29'))
           },
           trigger: 'change'
         }
@@ -95,8 +94,7 @@ const props = defineProps<{
           required: true,
           validator: async (_rule: Rule, value: string) => {
             if (value === '') throw new Error(t('TXT_CODE_cc732bf6'))
-            if (value.includes('\n'))
-              throw new Error(t('TXT_CODE_ffeacc21'))
+            if (value.includes('\n')) throw new Error(t('TXT_CODE_ffeacc21'))
           },
           trigger: 'change'
         }
@@ -105,9 +103,7 @@ const props = defineProps<{
         {
           required: false,
           validator: async (_rule: Rule, value: string) => {
-            if (value === '') throw new Error(t('TXT_CODE_83d8e4a1'))
-            if (value.includes('\n'))
-              throw new Error(t('TXT_CODE_e9ac4f57'))
+            if (value.includes('\n')) throw new Error(t('TXT_CODE_e9ac4f57'))
           },
           trigger: 'change'
         }
@@ -274,7 +270,10 @@ defineExpose({
               <a-row :gutter="20">
                 <a-col :span="12">
                   <a-form-item :label="t('TXT_CODE_2a34c50a')" name="language">
-                    <a-select v-model:value="formData.language" :placeholder="t('TXT_CODE_60752a40')">
+                    <a-select
+                      v-model:value="formData.language"
+                      :placeholder="t('TXT_CODE_60752a40')"
+                    >
                       <a-select-option value="zh_cn">简体中文</a-select-option>
                       <a-select-option value="en_us">English</a-select-option>
                     </a-select>
@@ -426,10 +425,7 @@ defineExpose({
           </a-row>
 
           <a-form-item :label="t('TXT_CODE_13eac7e1')" name="targetLink">
-            <a-input
-              v-model:value="formData.targetLink"
-              :placeholder="t('TXT_CODE_8d83752')"
-            />
+            <a-input v-model:value="formData.targetLink" :placeholder="t('TXT_CODE_8d83752')" />
           </a-form-item>
 
           <a-form-item :label="t('TXT_CODE_9901af98')" name="tags">
@@ -477,7 +473,10 @@ defineExpose({
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('TXT_CODE_5ce5085c')" :name="['setupInfo', 'ie']">
-                <a-select v-model:value="formData.setupInfo.ie" :placeholder="t('TXT_CODE_3bb646e4')">
+                <a-select
+                  v-model:value="formData.setupInfo.ie"
+                  :placeholder="t('TXT_CODE_3bb646e4')"
+                >
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
@@ -485,7 +484,10 @@ defineExpose({
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('TXT_CODE_2efcbf1e')" :name="['setupInfo', 'oe']">
-                <a-select v-model:value="formData.setupInfo.oe" :placeholder="t('TXT_CODE_3bb646e4')">
+                <a-select
+                  v-model:value="formData.setupInfo.oe"
+                  :placeholder="t('TXT_CODE_3bb646e4')"
+                >
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
@@ -493,7 +495,10 @@ defineExpose({
             </a-col>
             <a-col :span="8">
               <a-form-item :label="t('TXT_CODE_6f161560')" :name="['setupInfo', 'fileCode']">
-                <a-select v-model:value="formData.setupInfo.fileCode" :placeholder="t('TXT_CODE_3bb646e4')">
+                <a-select
+                  v-model:value="formData.setupInfo.fileCode"
+                  :placeholder="t('TXT_CODE_3bb646e4')"
+                >
                   <a-select-option v-for="item in TERMINAL_CODE" :key="item" :value="item">
                   </a-select-option>
                 </a-select>
@@ -509,7 +514,12 @@ defineExpose({
             ></a-select>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane v-if="formData.setupInfo?.docker" key="3" :tab="t('TXT_CODE_645da993')" force-render>
+        <a-tab-pane
+          v-if="formData.setupInfo?.docker"
+          key="3"
+          :tab="t('TXT_CODE_645da993')"
+          force-render
+        >
           <a-row :gutter="20">
             <a-col :span="8">
               <a-form-item :label="t('TXT_CODE_61a8296e')" :name="['setupInfo', 'processType']">
