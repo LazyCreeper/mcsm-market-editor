@@ -1,5 +1,14 @@
-# Vue 3 + TypeScript + Vite
+<div align="center">
+  <h1>MCSManager MTE</h1>
+</div>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+<br />
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 项目介绍
+
+这是一个适用于 MCSManager 10.8 的应用市场模板编辑器
+
+## 在线体验
+
+[https://mte.imlazy.ink/](https://mte.imlazy.ink/)
+
