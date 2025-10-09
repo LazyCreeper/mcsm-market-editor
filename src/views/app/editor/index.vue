@@ -116,6 +116,13 @@ const getSummaryPackages = (
       if (!map.has(item.gameType)) {
         const summary: QuickStartPackages = {
           ...item,
+          key:
+            item.title +
+            item.language +
+            item.platform +
+            item.gameType +
+            item.targetLink +
+            item.category,
           description: '',
           title: item.gameType,
           category: '',
@@ -573,15 +580,7 @@ onMounted(() => {
     </a-col>
 
     <!-- Package cards grid with fade-up animation -->
-    <a-col
-      v-for="item in dynamicList"
-      :key="item.targetLink + item.title + item.gameType + item.language + item.category"
-      :span="24"
-      :xl="6"
-      :lg="6"
-      :md="12"
-      :sm="24"
-    >
+    <a-col v-for="item in dynamicList" :key="item.key" :span="24" :xl="6" :lg="6" :md="12" :sm="24">
       <!-- Individual package card -->
       <div style="display: flex; flex-grow: 1; flex-direction: column; height: 100%">
         <CardPanel

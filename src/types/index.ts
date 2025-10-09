@@ -50,6 +50,7 @@ export interface QuickStartPackages {
   platform: string
   tags?: string[]
   isSummary?: boolean
+  key?: string
 }
 
 export interface QuickStartTemplate {
