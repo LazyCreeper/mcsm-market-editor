@@ -108,7 +108,7 @@
   "TXT_CODE_72952e19": "Please select items to delete",
   "TXT_CODE_28190dbc": "Deleted Successfully",
   "TXT_CODE_dfd4fc5a": "Editor Options & Notes",
-  "TXT_CODE_372e7b9c": "Click \"View\" to browse templates in the current category, click \"Install\" to edit template info, and click \"Batch Edit\" to delete items.",
+  "TXT_CODE_372e7b9c": "Click \"Image\" to browse templates in the current category, click \"Install\" to edit template info, and click \"Batch Edit\" to delete items.",
   "TXT_CODE_24821a7e": "Page under development, may be final quality ԅ(¯﹃¯ԅ)",
   "TXT_CODE_29efd001": "Copy Current Template to Clipboard",
   "TXT_CODE_c5a46eba": "Download Modified File",
@@ -143,6 +143,10 @@
   "TXT_CODE_8e16ee21": "Click to upload template file",
   "TXT_CODE_e1c60611": "JSON format only",
   "TXT_CODE_595efd06": "Create New",
-  "TXT_CODE_98dbd049": "Suggest not to exceed 3 lines"
+  "TXT_CODE_98dbd049": "Suggest not to exceed 3 lines",
+  "TXT_CODE_2a22c2ff": "No clipboard permission, please check your browser settings",
+  "TXT_CODE_276756b2": "Are you sure?",
+  "TXT_CODE_75da3f2d": "Clear current template",
+  "TXT_CODE_caaac421": "Import from clipboard"
 }
 

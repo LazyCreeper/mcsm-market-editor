@@ -34,10 +34,26 @@ const fetchTemplate = async () => {
     appListLoading.value = true
     const { data } = await axios.get(url.value)
     appList.value = data
-  } catch (error) {
-    message.error(t('TXT_CODE_aa13fde2') + `${error}`)
+  } catch (err: any) {
+    message.error(t('TXT_CODE_aa13fde2') + `${err.message}`)
   } finally {
     appListLoading.value = false
+  }
+}
+
+const importFromClipboard = async () => {
+  try {
+    const text = await navigator.clipboard.readText()
+    const jsonData = JSON.parse(text) as QuickStartTemplate
+    appList.value = jsonData
+  } catch (err: any) {
+    if (err instanceof SyntaxError) {
+      message.error(t('TXT_CODE_bddc37e2'))
+    } else if (err.name === 'NotAllowedError') {
+      message.error(t('TXT_CODE_2a22c2ff'))
+    } else {
+      message.error(err.message)
+    }
   }
 }
 
@@ -322,6 +338,10 @@ const batchDelete = () => {
   message.success(t('TXT_CODE_28190dbc'))
 }
 
+const rm_rf = () => {
+  appList.value!.packages = selectedItems.value = []
+}
+
 onMounted(() => {
   if (isUserUpload.value) {
     appList.value = userUploadData.value
@@ -382,12 +402,21 @@ onMounted(() => {
         </a-button>
       </a-form-item>
 
-      <!-- <a-form-item class="mb-0">
-        <a-button class="btn-has-icon" type="default" size="large" @click="checkRaw">
-          {{ t('TXT_CODE_9f1885b4') }}
-          <FileTextOutlined />
+      <a-form-item class="mb-0">
+        <a-button class="btn-has-icon" type="default" size="large" @click="importFromClipboard">
+          {{ t('TXT_CODE_caaac421') }}
+          <CopyOutlined />
         </a-button>
-      </a-form-item> -->
+      </a-form-item>
+
+      <a-form-item class="mb-0">
+        <a-popconfirm :title="t('TXT_CODE_276756b2')" @confirm="rm_rf">
+          <a-button class="btn-has-icon" danger size="large">
+            {{ t('TXT_CODE_75da3f2d') }}
+            <DeleteOutlined />
+          </a-button>
+        </a-popconfirm>
+      </a-form-item>
     </div>
 
     <div class="flex flex-wrap gap-4">
