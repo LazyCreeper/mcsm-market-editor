@@ -528,7 +528,7 @@ onMounted(() => {
       </div>
     </a-col>
   </a-row>
-  <a-row v-else :gutter="[12, 12]" style="height: 100%">
+  <a-row v-else :gutter="[16, 16]" style="height: 100%">
     <!-- Search filters section -->
     <a-col :span="24" :md="24">
       <a-form
@@ -609,10 +609,41 @@ onMounted(() => {
     </a-col>
 
     <!-- Package cards grid with fade-up animation -->
-    <a-col v-for="item in dynamicList" :key="item.key" :span="24" :xl="6" :lg="6" :md="12" :sm="24">
+    <a-col
+      v-for="item in dynamicList"
+      :key="item.key"
+      :span="24"
+      :sm="24"
+      :md="12"
+      :lg="item.isSummary ? 8 : 6"
+    >
       <!-- Individual package card -->
       <div style="display: flex; flex-grow: 1; flex-direction: column; height: 100%">
+        <div
+          v-if="item.isSummary"
+          class="package-image-container-summary global-card-container-shadow"
+          style="overflow: hidden"
+          @click="searchForm.gameType = item.gameType"
+        >
+          <div class="package-image-container" style="border-radius: 0">
+            <img
+              class="package-image cursor-pointer"
+              style="height: 220px; border-radius: 0"
+              :src="item.image"
+              alt=""
+              srcset=""
+            />
+          </div>
+
+          <a-typography-title :level="5" class="flex-center package-subtitle mb-0">
+            <span>
+              {{ item.title }}
+            </span>
+          </a-typography-title>
+        </div>
+
         <CardPanel
+          v-else
           style="flex-grow: 1; padding: 12px"
           :class="{ selected: multipleMode && findItem(item) }"
           :full-height="!item.isSummary"
@@ -663,7 +694,6 @@ onMounted(() => {
 
               <div class="package-action">
                 <a-button
-                  v-if="!item.isSummary"
                   block
                   type="primary"
                   size="large"
@@ -683,17 +713,6 @@ onMounted(() => {
                       : t('TXT_CODE_1704ea49')
                   }}
                 </a-button>
-
-                <a-button
-                  v-else
-                  block
-                  type="primary"
-                  size="large"
-                  class="download-button btn-has-icon"
-                  @click="searchForm.gameType = item.gameType"
-                >
-                  {{ t('TXT_CODE_530f5951') }}
-                </a-button>
               </div>
             </div>
           </template>
@@ -711,7 +730,7 @@ onMounted(() => {
   />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .package-card-content {
   display: flex;
   flex-direction: column;
@@ -726,15 +745,6 @@ onMounted(() => {
   border-radius: 8px;
 }
 
-.package-image {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  max-height: 160px;
-  height: 160px;
-  transition: transform 0.3s ease;
-}
-
 .package-info {
   flex: 1;
 }
@@ -747,25 +757,18 @@ onMounted(() => {
 .download-button {
   margin: 0px auto;
   transition: all 0.3s ease;
+  max-width: 140px;
 }
 
 .package-image {
-  user-drag: none;
   user-select: none;
   position: relative;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.package-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent, rgba(24, 144, 255, 0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  height: 160px;
+  background-color: var(--color-gray-1);
 }
 
 .package-image:hover {
@@ -787,13 +790,35 @@ onMounted(() => {
   animation: pulse-glow 2s infinite;
 }
 
+.package-subtitle {
+  cursor: pointer;
+  background-color: var(--card-bottom-background-color);
+  color: rgb(255, 255, 255);
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 0 !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  margin: 0;
+}
+
+.package-image-container-summary {
+  position: relative;
+}
+
 .selected {
-  border: 1px solid var(--color-blue-6);
+  border: 1px solid var(--color-blue-6) !important;
   user-select: none;
+  transition: all 0.3s;
 
   &:hover {
     border: 1px solid var(--color-blue-6);
-    transition: all 0.3s;
     box-shadow: inset 0 0 0 0.5px var(--color-blue-6);
   }
 }
